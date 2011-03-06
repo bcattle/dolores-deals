@@ -25,14 +25,18 @@ def deal(request, deal_id = 0):
 		return HttpResponse('Got deal ' + deal_id)
 	else:
 		chomp_url = 'http://www.chompon.com/i_deal?nver=1&pid=1661&fg=ffffff&wh=960&noshare=buzz&template=north&'
+		mural_file = 'mural.jpg'
 		if request.GET.get('d','') == 'fake':
-			assert False
+			chomp_url += 'test=1&'
+		elif request.GET.get('m','') == '2':
+			mural_file = 'mural2.jpg'
 	
 		# Get today's deal
 		c = Context(defaultContext)
 		c.update({
 			'current_menu_choice': 'deal',
 			'chomp_url': chomp_url,
+			'mural_file' : mural_file,
 		})
 		return render_to_response('deal.html', c)
 
