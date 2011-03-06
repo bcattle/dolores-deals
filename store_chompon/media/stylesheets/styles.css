@@ -1025,6 +1025,24 @@ a:hover.comment-reply-link	{text-decoration:none;}
 				
 /* ========== SIDEBARS ========== */
 
+/* Deal Sidebar */
+#dealSidebar	{
+					width:245px;
+					min-height:265;
+					overflow:hidden;
+					padding:10px;
+					background:#dddddd;
+					
+					position:absolute;
+					top:104px;
+					right:0px;
+					
+					border-radius:7px;
+					-moz-border-radius:7px;
+					-khtml-border-radius:7px;
+					-webkit-border-radius:7px;
+				}
+
 /* ---- Right Sidebar ---- */
 
 #sidebar		{width:310px;}

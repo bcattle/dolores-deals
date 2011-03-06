@@ -30,22 +30,22 @@
 			&nbsp; &nbsp; <a href="/login/" title="Login" style="color:white;">Login</a></p>
 		</form>
 	</div> -->
-	<div id="LightBlueBox">
+	<!-- <div id="LightBlueBox">
 		<h3>Help your <span style="color:green">neighborhood</span>. Support your <a href="causes.html">cause</a>.</h3>
-	</div>
+	</div> -->
 	<div class="clear"></div>
 	<script>
-	function checkAndClear() {
-		if($('#hdrEmailField').val()=='{{ mailing_list_text }}') {
-				$('#hdrEmailField').val('');
-			}
-	}
-	$(document).ready(function(){ 
-		$('#hdrEmailField').focus(function(){
+		function checkAndClear() {
 			if($('#hdrEmailField').val()=='{{ mailing_list_text }}') {
-				$('#hdrEmailField').val('');
-			}
+					$('#hdrEmailField').val('');
+				}
+		}
+		$(document).ready(function(){ 
+			$('#hdrEmailField').focus(function(){
+				if($('#hdrEmailField').val()=='{{ mailing_list_text }}') {
+					$('#hdrEmailField').val('');
+				}
+			});
 		});
-	});
 	</script>
 </div>

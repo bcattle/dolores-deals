@@ -24,7 +24,7 @@ def deal(request, deal_id = 0):
 		# Get a specific deal by id
 		return HttpResponse('Got deal ' + deal_id)
 	else:
-		chomp_url = 'http://www.chompon.com/i_deal?nver=1&pid=1661&fg=ffffff&wh=960&noshare=buzz&template=north&'
+		chomp_url = 'http://www.chompon.com/i_deal?nver=1&pid=1661&fg=ffffff&wh=980&noshare=buzz&template=north&'
 		mural_file = 'mural.jpg'
 		if request.GET.get('d','') == 'fake':
 			chomp_url += 'test=1&'

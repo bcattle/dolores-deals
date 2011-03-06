@@ -9,22 +9,22 @@
 {% block content %}
 	<!-- Start Slider -->
 	<div class="slider_wrapper" style="height:216px">
-			<img src="{{ staticroot }}images/{{ mural_file}}" width="960" height="216" />
+			<img src="{{ staticroot }}images/{{ mural_file }}" width="960" height="216" />
 	</div>
 	<!-- End Slider -->
-	<!-- Start Featured Home Page Line -->
-	<!--<div id="featured_line">-->
-	<!-- <div class="slider_wrapper" style="height:35px">
-		<h3 class="aligncenter">Help your <span style="color:green">neighborhood</span>. Support your <a href="causes.html">cause</a>.</h3>
-		<div class="clear"></div>
-	</div> -->
-
-	<!-- End Featured Home Page Line -->
+	
+	<div class="slider_wrapper" style="height:26px">
+		<h3 class="aligncenter">Help your <span style="color:green">neighborhood</span>. Support your <a href="causes.html">cause</a>. It starts in the Mission and Castro.</h3>
+	</div>
+	
 	<!-- Start Content Wrapper -->
 	<div id="content_wrapper">
 		<div id="content">
-			<div class="box">
-				<iframe style="margin:0 0 0 0; overflow: hidden;" src="{{ chomp_url }}" frameborder="0" border="0" width="960" height="1800" allowtransparency="true" scrolling="no" id="chompon"></iframe>
+			<!-- <div class="box" style="position:relative;"> -->
+			<div style="position:relative;">
+				{% include 'includes/nonprofit.html' %}
+				
+				<iframe style="margin:0 0 0 0; overflow: hidden;" src="{{ chomp_url }}" frameborder="0" border="0" width="980" height="1800" allowtransparency="true" scrolling="no" id="chompon"></iframe>
 				<a id="chompon_popup" href="#"></a>
 				<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 				<script type="text/javascript" src="http://www.chompon.com/fancybox/jquery.fancybox-1.3.4.pack.js?v=5"></script>
