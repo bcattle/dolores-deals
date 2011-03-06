@@ -23,7 +23,7 @@ DATABASES = {
     }
 }
 
-HOST_URL = 'http://proto.doloresdeals.org/'
+HOST_URL = 'http://www.doloresdeals.org/'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
