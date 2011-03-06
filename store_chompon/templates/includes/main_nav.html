@@ -1,0 +1,25 @@
+{# 		main_nav.html											#}
+{# 		Bryan Cattle - 2/27/2011								#}
+{# 		Customer-facing navigation at the top of the page		#}
+
+<div id="MainNav">
+	<!-- <a href="index.html" title="Home" class="home_btn"><img  src="images/icon_home.gif" width="17" height="19" alt="Home" /></a> -->
+	<div id="menu">
+		<ul class="ddsmoothmenu">
+			{% for c in menu_choices %}
+				<li id="{{ c.id }}" 
+					{% if c.id == current_menu_choice %}
+						class="current-menu-item"
+					{% endif %}
+				><h4><a href="{{ c.url }}" title="{{ c.label }}">{{ c.label }}</a></h4></li>
+			{% endfor %}
+		</ul>
+	</div>
+	<!-- Start Social Icons -->
+	<ul class="social">
+		<li><a href="http://www.facebook.com/DoloresDeals.org" class="ico_facebook" title="Facebook"></a></li>
+		<li><a href="http://twitter.com/DoloresDeals" class="ico_twitter" title="Twitter"></a></li>
+	</ul>
+	<!-- End Social Icons -->
+	<div class="clear"></div>
+</div>

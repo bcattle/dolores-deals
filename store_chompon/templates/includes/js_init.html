@@ -1,0 +1,47 @@
+<!-- Initialise jQuery Library -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+<!-- Cufon Font Generator Plugin -->
+<script type="text/javascript" src="{{ staticroot }}js/cufon/cufon-yui.js"></script>
+<script type="text/javascript" src="{{ staticroot }}js/cufon/MgOpen_Modata_400-MgOpen_Modata_700.font.js"></script>
+<script type="text/javascript" src="{{ staticroot }}js/cufon/cufon-load.js"></script>
+
+<!-- jQuery Watermark Plugin -->
+<script type="text/javascript" src="{{ staticroot }}js/jquery.watermarkinput.js"></script>
+
+<!-- DropDown Menu Plugin -->
+<script type="text/javascript" src="{{ staticroot }}js/ddsmoothmenu.js"></script> 
+
+<!-- jQuery Image Fading plugin -->
+<script type="text/javascript" src="{{ staticroot }}js/jquery.color.js"></script>
+
+<!-- jQuery Tabs -->
+<script type="text/javascript" src="{{ staticroot }}js/ui.core.js"></script>
+<script type="text/javascript" src="{{ staticroot }}js/ui.tabs.js"></script>
+
+<!-- jQuery TinyCarousel -->
+<script type="text/javascript" src="{{ staticroot }}js/jquery.tinycarousel.min.js"></script>
+
+<!-- jQuery Tipsy -->
+<script type="text/javascript" src="{{ staticroot }}js/jquery.tipsy.js"></script>
+
+<!-- jQuery autoAlign -->
+<script type="text/javascript" src="{{ staticroot }}js/jquery.autoAlign.js"></script>
+
+<!-- Nivo Slider -->
+<script type="text/javascript" src="{{ staticroot }}js/nivo-slider/jquery.nivo.slider.js"></script>
+<script type="text/javascript">
+	$(window).load(function() {
+		$('#nivo-slider').nivoSlider({
+			effect:'random', //Specify sets like: 'fold,fade,sliceDown'
+			slices:40,
+			animSpeed:600,
+			pauseTime:3000,
+			directionNav:true, //Next and Prev
+			directionNavHide:false,
+			controlNav:true //1,2,3...
+		});
+	});
+</script>
+
+<script type="text/javascript" src="{{ staticroot }}js/custom.js"></script>

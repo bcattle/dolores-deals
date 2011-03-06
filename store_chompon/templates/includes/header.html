@@ -1,0 +1,51 @@
+{# 		header.html													#}
+{# 		Bryan Cattle - 2/27/2011									#}
+{# 		Includes logo, neighborhood menu, and login/email entry		#}
+
+<div id="header">
+	<!-- Site Logo -->
+	<div>
+		<!-- <a href="/" class="logo"><img src="{{ staticroot }}images/logo.png" alt="DoloresDeals.org" height="50" width="292" /></a> -->
+		<a href="/" class="logo"><img src="{{ staticroot }}images/FF_DoloresDeals_LO.png" alt="DoloresDeals.org" height="50" width="292" /></a>
+	</div>
+	
+	<!--<div id="nmenu">
+		<ul class="nddsmoothmenu">
+			<li class="cururent-menu-item">Mission
+				<ul>
+					<li>Mission</li>
+					<li>Castro</li>
+					<li>Hayes Valley</li>
+					<li>Pacific Heights</li>
+					<li>Marina</li>
+					<li>SoMA</li>
+				</ul>
+			</li>
+		</ul>
+	</div>-->
+	<!-- <div class="wpcf7" style="float:right; padding:10px 10px 10px 0px;">
+		<form class="wpcf7-form" action="#">
+			<p><span class="wpcf7-form-control-wrap your-email"><input type="text" class="wpcf7-text" id="hdrEmailField" value="{{ mailing_list_text }}" name="email" style="width:160px" /></span>
+			<input type="submit" class="wpcf7-submit" value="Go"/>
+			&nbsp; &nbsp; <a href="/login/" title="Login" style="color:white;">Login</a></p>
+		</form>
+	</div> -->
+	<div id="LightBlueBox">
+		<h3>Help your <span style="color:green">neighborhood</span>. Support your <a href="causes.html">cause</a>.</h3>
+	</div>
+	<div class="clear"></div>
+	<script>
+	function checkAndClear() {
+		if($('#hdrEmailField').val()=='{{ mailing_list_text }}') {
+				$('#hdrEmailField').val('');
+			}
+	}
+	$(document).ready(function(){ 
+		$('#hdrEmailField').focus(function(){
+			if($('#hdrEmailField').val()=='{{ mailing_list_text }}') {
+				$('#hdrEmailField').val('');
+			}
+		});
+	});
+	</script>
+</div>
