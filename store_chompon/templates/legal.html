@@ -5,14 +5,18 @@
 
 {% block title %}DoloresDeals.org | A better deal for your neighborhood{% endblock %}
 
+{% block body %}<body id="sp">{% endblock %}
+
 {% block content %}
 <!-- Start Content Wrapper -->
 <div id="content_wrapper">
 	<!-- Content Area -->
 	<div id="content">
-		<!-- Top Three Featured Boxes -->
-		<div class="box">
-
+		<h1>Legal</h1>
+		<div class="box" style="padding:30px;">
+			{% include 'privacy.html' %}
+			
+			{% include 'terms.html' %}
 		</div>
 	</div>
 </div>

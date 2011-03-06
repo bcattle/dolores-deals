@@ -17,7 +17,8 @@
 	
 	<title>{% block title %}DoloresDeals.org | A better deal for your neighborhood{% endblock %}</title>
 </head>
-<body>
+
+{% block body %}<body>{% endblock %}
 	<div class="container">
 		{# Header: logo, neighborhood select and login/email #}
 		{% include 'includes/header.html' %}
