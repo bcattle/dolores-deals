@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+	<link rel="stylesheet" href="{{ staticroot }}stylesheets/metallic-blue.css" type="text/css" title="metallic-blue" media="screen" />	
+	<style type="text/css">
+		@import url({{ staticroot }}stylesheets/styles.css);			/*link to the main CSS file */
+		@import url({{ staticroot }}stylesheets/ddsmoothmenu.css);		/*link to the CSS file for dropdown menu */
+		@import url({{ staticroot }}stylesheets/tipsy.css);				/*link to the CSS file for tips */
+		@import url({{ staticroot }}stylesheets/nivo-slider.css);		/*link to the CSS file for nivo-slider */
+	</style>
+
+	{% include 'includes/js_init.html' %}
+	
+	<title>{% block title %}DoloresDeals.org | A better deal for your neighborhood{% endblock %}</title>
+</head>
+
+{% block body %}<body>{% endblock %}
+	<div class="container">
+		{# Header: logo, neighborhood select and login/email #}
+		{% include 'includes/header.html' %}
+		
+		{# Main nav #}
+		{% include 'includes/main_nav.html' %}
+		
+		{% block content %}
+		{% endblock %}
+
+		{% include 'includes/footer.html' %}
+	</div>
+</body>
+</html>
