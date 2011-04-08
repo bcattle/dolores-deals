@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 22
+/svn/!svn/ver/32/trunk
+END
+LICENSE.txt
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/14/trunk/LICENSE.txt
+END
+django.alias_original_get_absolute_url.diff
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/13/trunk/django.alias_original_get_absolute_url.diff
+END
