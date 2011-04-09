@@ -66,6 +66,9 @@ MEDIA_URL = 'http://127.0.0.1:8000/upload/'
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = 'http://127.0.0.1:8000/media/admin/'
 
+# Tell django.contrib.auth what model holds user profile data
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '4*wy$k2$f^5!&=cs#n=*lvm9xba5n+n#)x3ra=b@-a=6b!r%^u'
 
@@ -84,7 +87,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'store_chompon.urls'
+ROOT_URLCONF = 'store.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -100,7 +103,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

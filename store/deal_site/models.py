@@ -1,64 +1,29 @@
 from django.db import models
 
-class UrlString(models.Model):
-	str = models.CharField(max_length=150, unique=True)
-	
-	def __unicode__(self):
-		return self.str
-	
-	class Meta:
-		ordering = ['str']
-		
-class TinyUrlString(models.Model):
-	str = models.CharField(max_length=10, unique=True)
-	
-	def __unicode__(self):
-		return self.str
-	
-	class Meta:
-		ordering = ['str']
+from django.contrib.auth.models import User
+from dynamicurls.models import UrlString, TinyUrlString
 
 class City(models.Model):
 	name = models.CharField(max_length=50, unique=True)
 	abbreviation = models.CharField(max_length=10, blank=True, unique=True)
-	urlString = models.ForeignKey(UrlStrings, blank=True, null=True, on_delete=models.SET_NULL)
+	urlString = models.ForeignKey(UrlString, blank=True, null=True, on_delete=models.SET_NULL)
+	enabled  = models.BooleanField()
 	
 	def __unicode__(self):
 		return self.name
-	
 	class Meta:
 		ordering = ['name']
 
 class Neighborhood(models.Model):
 	name = models.CharField(max_length=50)
 	city = models.ForeignKey(City)
-	urlString = models.ForeignKey(UrlStrings, blank=True, null=True, on_delete=models.SET_NULL)
+	urlString = models.ForeignKey(UrlString, blank=True, null=True, on_delete=models.SET_NULL)
+	enabled  = models.BooleanField()
 
 	def __unicode__(self):
 		return self.city.name + ', ' + self.name
-	
 	class Meta:
 		unique_together = ('name', 'city')
-
-
-class User(models.Model):
-	firstName = models.CharField(max_length=50)
-	middleName = models.CharField(max_length=50, blank=True)
-	lastName = models.CharField(max_length=50)
-	preferredString = models.CharField(max_length=50, blank=True)	# Allow them to choose fn only, firstlast, firstmiddlelast
-	email = models.EmailField()
-	password = models.CharField(max_length=50, blank=True)			# TODO: figure out how to do this
-	
-	twitter = models.CharField(max_length=50, blank=True)
-	url = models.UrlField(blank=True)
-	pic = models.ImageField(upload_to="profilepics", blank=True, null=True)
-	
-	created = models.DateTimeField(auto_now_add=True)
-	lastLogin = models.DateTimeField(blank=True, null=True)
-	enabled = models.BooleanField()
-	
-	defaultNeighborhood = models.ForeignKey(Neighborhood, blank=True, null=True, on_delete=models.SET_NULL)
-	defaultCity = models.ForeignKey(City, blank=True, null=True, on_delete=models.SET_NULL)
 
 class Picture(models.Model):
 	pic = models.ImageField(upload_to="uploadpics")
@@ -67,6 +32,10 @@ class Picture(models.Model):
 	related = models.ManyToManyField(Picture, blank=True, null=True)
 	description = models.CharField(max_length=200, blank=True)
 
+	def __unicode__(self):
+		return self.id + ' : ' + str(self.created)
+	class Meta:
+		ordering = ['created']
 
 class Cause(models.Model):
 	name = models.CharField(max_length=50, unique=True)
@@ -75,23 +44,53 @@ class Cause(models.Model):
 	htmlShort = models.TextField(max_length=500, blank=True)
 	icons = models.ManyToManyField(Picture, blank=True, null=True)
 	
+	def __unicode__(self):
+		return name
+	class Meta:
+		ordering = ['name']
+	
 class Nonprofit(models.Model):
 	name = models.CharField(max_length=50, unique=True)
 	causes = models.ManyToManyField(Cause, blank=True, null=True)
+	neighborhood = models.ManyToManyField(Neighborhood)
 	pictures = models.ManyToManyField(Picture, blank=True, null=True)
 	htmlLong = models.TextField(max_length=2000, blank=True)
 	htmlShort = models.TextField(max_length=500, blank=True)
 	contacts = models.ManyToManyField(User, blank=True, null=True)
 	comment = models.TextField(max_length=2000, blank=True)
 	
+	def __unicode__(self):
+		return name
+	class Meta:
+		ordering = ['name']
+	
 class Benficiary(models.Model):
 	cause = models.ForeignKey(Cause, blank=True, null=True)
 	nonprofit = models.ForeignKey(Nonprofit, blank=True, null=True)
+	def __unicode__(self):
+		if cause:
+			return cause
+		if nonprofit:
+			return nonprofit
+		else:
+			return 'Empty'
 	class Meta:
 		unique_together = ('cause', 'nonprofit')
 
 class Vendor(models.Model):
-			
+	name = models.CharField(max_length=50, unique=True)
+	neighborhood = models.ForeignKey(Neighborhood)
+	pictures = models.ManyToManyField(Picture, blank=True, null=True)
+	htmlLong = models.TextField(max_length=2000, blank=True)
+	htmlShort = models.TextField(max_length=500, blank=True)
+	contacts = models.ManyToManyField(User, blank=True, null=True)
+	comment = models.TextField(max_length=2000, blank=True)
+	
+	def __unicode__(self):
+		return self.name
+	class Meta:
+		ordering = ['name']
+	
 DEAL_STATUS_CHOICES = (
 	('EDT', 'Being edited'),
 	('REV', 'Awaiting review'),
@@ -116,9 +115,16 @@ class Deal(models.Model):
 	createdBy = models.ForeignKey(User)
 	approvedBy = models.ForeignKey(User, blank=True, null=True)
 	
+	def __unicode__(self):
+		return self.vendor.name + ' : ' + self.headline
+	class Meta:
+		ordering = ['vendor', 'startDate']
+	
+	
 class DealChoice(models.Model):
 	deal = models.ForeignKey(Deal)
 	index = models.SmallPositiveIntegerField()
+	headline = models.TextField(max_length=200)
 	htmlLong = models.TextField(max_length=4000)
 	picture = models.ForeignKey(Picture, blank=True, null=True)
 	startDate = models.DateTimeField(blank=True, null=True)
@@ -132,39 +138,19 @@ class DealChoice(models.Model):
 	minQty = models.PositiveIntegerField()
 	maxQty = models.PositiveIntegerField()
 	
+	def __unicode__(self):
+		return str(self.deal) + ':(' + self.index + ') - ' + self.headline
 	class Meta:
 		unique_together = ('deal', 'index')
+		ordering = ['deal', 'index']
 
 class DealRun(models.Model):
 	deal = models.ForeignKey(Deal)
 	start = models.DateTimeField()
 	end = models.DateTimeField()
+	
+	def __unicode__(self):
+		return str(self.deal) + ': run from ' + str(self.start) + ' to ' + str(self.end)
+	class Meta:
+		ordering = ['deal', 'start']
 		
-class Purchase(models.Model):
-	dealChoice = models.ForeignKey(DealChoice)
-	qty = models.PositiveSmallIntegerField()
-	amount = models.DecimalField(max_digits=6, decimal_places=2)
-	
-PAYMENT_STATUS_CHOICES = (
-	('PENDING', 'Payment pending'),
-	('PROCESSING', 'Payment being processed'),
-	('PAID', 'Payment complete'),
-	('REFUNDED', 'Payment refunded'),
-)	
-
-class Donation(models.Model):
-	purchase = models.ForeignKey(Purchase)					# The associated purchase transaction
-	beneficiary = models.ForeignKey(Beneficiary)
-	nonprofit = models.ForeignKey(Nonprofit, blank=True, null=True)		# Holds nonprofit if beneficiary is a cause
-	nonprofitAssigned = models.BooleanField()				# Did the user select a nonprofit, or do we need to
-	status = models.CharField(max_length=12, choices=PAYMENT_STATUS_CHOICES)
-	amount = models.DecimalField(max_digits=6, decimal_places=2)
-	lastStatusUpdated = models.DateTimeField()
-	created = models.DateTimeField(auto_now_add=True)
-	
-class Payment(models.Model):
-	purchase = models.ForeignKey(Purchase)					# The associated purchase transaction
-	status = models.CharField(max_length=12, choices=PAYMENT_STATUS_CHOICES)
-	amount = models.DecimalField(max_digits=6, decimal_places=2)
-	lastStatusUpdated = models.DateTimeField()
-	created = models.DateTimeField(auto_now_add=True)
