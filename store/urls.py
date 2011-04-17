@@ -1,17 +1,12 @@
 from django.conf.urls.defaults import *
-from store_chompon import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('deal_site.views',
-    # Example:
-    # (r'^dolores/', include('dolores.foo.urls')),
-    # (r'^dolores/', include('dolores.foo.urls')),
-
     # Uncomment the admin/doc line below to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    #(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
@@ -40,7 +35,7 @@ urlpatterns = patterns('deal_site.views',
 # settings.STATIC_URL			- {{ staticroot }} 
 # settings.STATIC_ROOT			- root on the filesystem
 
-if settings.DEBUG:
-    urlpatterns += patterns('',
-        (r'^' + settings.STATIC_PATH + r'(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': True}),
-    )
+# if settings.DEBUG:
+#   urlpatterns += patterns('',
+#       (r'^' + settings.STATIC_PATH + r'(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT, 'show_indexes': True}),
+#	)

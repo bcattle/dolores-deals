@@ -1,12 +1,12 @@
 from django.db import models
 
 from django.contrib.auth.models import User
-from deal_site.models import DealChoice, Benficiary, Nonprofit, Vendor
+#from deal_site.models import DealChoice, Benficiary, Nonprofit, Vendor
 
 # Create your models here.
 class Purchase(models.Model):
 	user = models.ForeignKey(User)
-	dealChoice = models.ForeignKey(DealChoice)
+	dealChoice = models.ForeignKey('deal_site.DealChoice')
 	qty = models.PositiveSmallIntegerField()
 	amount = models.DecimalField(max_digits=6, decimal_places=2)
 	timePurchased = models.DateTimeField()
@@ -23,10 +23,10 @@ PAYMENT_STATUS_CHOICES = (
 	('REFUNDED', 'Payment refunded'),
 )	
 
-class PaymentToNonProfit(models.Model):
+class PaymentToNonprofit(models.Model):
 	purchase = models.ForeignKey(Purchase)					# The associated purchase transaction
-	beneficiary = models.ForeignKey(Beneficiary)
-	nonprofit = models.ForeignKey(Nonprofit, blank=True, null=True)		# Holds nonprofit if beneficiary is a cause
+	beneficiary = models.ForeignKey('deal_site.Beneficiary')
+	nonprofit = models.ForeignKey('deal_site.Nonprofit', blank=True, null=True)		# Holds nonprofit if beneficiary is a cause
 	nonprofitAssigned = models.BooleanField()				# Did the user select a nonprofit, or do we need to
 	amount = models.DecimalField(max_digits=6, decimal_places=2)
 	status = models.CharField(max_length=12, choices=PAYMENT_STATUS_CHOICES)
@@ -60,7 +60,7 @@ class PaymentToUs(models.Model):
 
 class PaymentToVendor(models.Model):
 	purchase = models.ForeignKey(Purchase)					# The associated purchase transaction
-	vendor = models.ForeignKey(Vendor, blank=True, null=True)		# Holds nonprofit if beneficiary is a cause
+	vendor = models.ForeignKey('deal_site.Vendor', blank=True, null=True)		# Holds nonprofit if beneficiary is a cause
 	amount = models.DecimalField(max_digits=6, decimal_places=2)
 	status = models.CharField(max_length=12, choices=PAYMENT_STATUS_CHOICES)
 	lastStatusUpdated = models.DateTimeField()
