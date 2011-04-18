@@ -63,7 +63,7 @@ class Nonprofit(models.Model):
 		return self.name
 	class Meta:
 		ordering = ['name']
-		order_with_respect_to = 'neighborhood'
+		#order_with_respect_to = 'neighborhood'
 	
 class Beneficiary(models.Model):
 	cause = models.ForeignKey(Cause, blank=True, null=True)
@@ -77,6 +77,7 @@ class Beneficiary(models.Model):
 			return 'Empty'
 	class Meta:
 		unique_together = ('cause', 'nonprofit')
+		db_table = 'deal_site_beneficiaries'
 
 class Vendor(models.Model):
 	name = models.CharField(max_length=50, unique=True)
@@ -102,6 +103,12 @@ DEAL_STATUS_CHOICES = (
 	('DON', 'Done'),
 )
 
+VENDOR_EMAIL_NOTIFICATION_CHOICES = (
+	('PS', 'Per sale'),
+	('D', 'Daily'),
+	('PD', 'Per deal')
+)
+
 class Deal(models.Model):
 	neighborhood = models.ForeignKey(Neighborhood)
 	headline = models.TextField(max_length=200)
@@ -110,6 +117,7 @@ class Deal(models.Model):
 	startDate = models.DateTimeField(blank=True, null=True)
 	endDate = models.DateTimeField(blank=True, null=True)		# These override the values in a particular DealChoice
 	vendor = models.ForeignKey(Vendor)
+	vendorEmailNotificationFrequency = models.CharField(max_length=3, choices=VENDOR_EMAIL_NOTIFICATION_CHOICES, blank=True, null=True)
 	defaultBeneficiary = models.ForeignKey(Beneficiary)
 	beneficiaryCanChange = models.BooleanField()
 	urlString = models.ForeignKey('dynamicurls.UrlString', blank=True, null=True)
@@ -129,25 +137,26 @@ class Deal(models.Model):
 class DealChoice(models.Model):
 	deal = models.ForeignKey(Deal)
 	index = models.PositiveSmallIntegerField()
-	headline = models.TextField(max_length=200)
-	htmlLong = models.TextField(max_length=4000)
+	title = models.TextField(max_length=200)
+	descriptionHtml = models.TextField(max_length=4000, blank=True)
 	picture = models.ForeignKey(Picture, blank=True, null=True)
 	startDate = models.DateTimeField(blank=True, null=True)
 	endDate = models.DateTimeField(blank=True, null=True)
 	
 	price = models.DecimalField(max_digits=6, decimal_places=2)
 	regPrice = models.DecimalField(max_digits=6, decimal_places=2)
-	amtToCharity = models.DecimalField(max_digits=6, decimal_places=2)
-	percentToCharity = models.DecimalField(max_digits=5, decimal_places=2)
+	amtToCharity = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+	percentToCharity = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 	
-	minQty = models.PositiveIntegerField()			# Or the deal won't happen (TODO)
-	maxQty = models.PositiveIntegerField()
+	minQty = models.PositiveIntegerField(blank=True, null=True)			# Or the deal won't happen (TODO)
+	maxQty = models.PositiveIntegerField(blank=True, null=True)
 	
 	def __unicode__(self):
-		return str(self.deal) + ':(' + self.index + ') - ' + self.headline
+		return str(self.deal.vendor) + ': (opt ' + str(self.index) + ') - ' + self.title
 	class Meta:
 		unique_together = ('deal', 'index')
 		ordering = ['deal', 'index']
+		order_with_respect_to = 'deal'
 
 class DealRun(models.Model):
 	deal = models.ForeignKey(Deal)
@@ -159,3 +168,15 @@ class DealRun(models.Model):
 	class Meta:
 		ordering = ['-start', 'deal']
 		
+class ActiveDeal(models.Model):
+	""" 
+	Lists the active deal in every neighborhood,
+	null if no deal is active. 
+	"""
+	neighborhood = models.ForeignKey(Neighborhood)
+	deal = models.ForeignKey(Deal, blank=True, null=True)
+	
+	def __unicode__(self):
+		return str(self.neighborhood) + ', active: ' + str(self.deal)
+	class Meta:
+		ordering = ['neighborhood']

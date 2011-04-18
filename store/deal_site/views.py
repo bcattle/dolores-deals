@@ -1,21 +1,22 @@
 from django.http import HttpRequest, HttpResponse
-from django.template import Context
+from django.template import Context, RequestContext
 from django.shortcuts import render_to_response
 
-# Format: id, label, url
-defaultMenu = [
+def defaultContextProcessor(request):
+	# Format: id, label, url
+	defaultMenu = [
 		{'id': 'deal', 'label': 'Today\'s deal', 'url': '/'},
 		{'id': 'causes', 'label': 'Causes', 'url': '/causes/'},
 		{'id': 'impact', 'label': 'Impact', 'url': '/impact/'},
 		{'id': 'community', 'label': 'Community', 'url': '/community/'},
 		{'id': 'blog', 'label': 'Blog', 'url': 'http://blog.doloresdeals.org/'},
 	]
-
-defaultContext = Context({
-			'menu_choices': defaultMenu,
-			'current_menu_choice': '',
-			'mailing_list_text': 'Sign up for our mailing list',
-		})
+	
+	return {
+		'menu_choices': defaultMenu,
+		#'current_menu_choice': '',			# Runs AFTER values passed by view?
+		'mailing_list_text': 'Sign up for our mailing list',
+	}
 
 def deal(request, deal_id = 0):
 	if deal_id:
@@ -30,7 +31,7 @@ def deal(request, deal_id = 0):
 			mural_file = 'mural2.jpg'
 	
 		# Get today's deal
-		c = Context(defaultContext)
+		c = RequestContext(request, {}, [defaultContextProcessor])
 		c.update({
 			'current_menu_choice': 'deal',
 			'chomp_url': chomp_url,
@@ -39,68 +40,68 @@ def deal(request, deal_id = 0):
 		return render_to_response('deal.html', c)
 
 def login(request):
-	c = Context(defaultContext)
+	c = RequestContext(request, {}, [defaultContextProcessor])
 	c.update({
 	})
 	return render_to_response('coupons.html', c)
 def verify(request):
-	c = Context(defaultContext)
+	c = RequestContext(request, {}, [defaultContextProcessor])
 	c.update({
 	})
 	return render_to_response('chomp-verify.html', c)
 def coupons(request):
-	c = Context(defaultContext)
+	c = RequestContext(request, {}, [defaultContextProcessor])
 	c.update({
 	})
 	return render_to_response('coupons.html', c)
 	
 def causes(request):
-	c = Context(defaultContext)
+	c = RequestContext(request, {}, [defaultContextProcessor])
 	# assert False
 	c.update({
 		'current_menu_choice': 'causes'
 	})
 	return render_to_response('causes.html', c)
 def impact(request):
-	c = Context(defaultContext)
+	c = RequestContext(request, {}, [defaultContextProcessor])
 	c.update({
 		'current_menu_choice': 'impact'
 	})
 	return render_to_response('impact.html', c)
 def community(request):
-	c = Context(defaultContext)
+	c = RequestContext(request, {}, [defaultContextProcessor])
 	c.update({
 		'current_menu_choice': 'community'
 	})
 	return render_to_response('community.html', c)
 
 def thanks(request):
-	c = Context(defaultContext)
+	c = RequestContext(request, {}, [defaultContextProcessor])
 	c.update({
 	})
 	return render_to_response('thanks.html', c)
 def partners_vendors(request):
-	c = Context(defaultContext)
+	c = RequestContext(request, {}, [defaultContextProcessor])
 	c.update({
 	})
 	return render_to_response('partners_vendors.html', c)
 def partners_nonprofits(request):
-	c = Context(defaultContext)
+	c = RequestContext(request, {}, [defaultContextProcessor])
 	c.update({
 	})
 	return render_to_response('partners_nonprofits.html', c)
 def legal(request):
-	c = Context(defaultContext)
+	c = RequestContext(request, {}, [defaultContextProcessor])
 	c.update({
 	})
 	return render_to_response('legal.html', c)
 def press(request):
-	c = Context(defaultContext)
+	c = RequestContext(request, {}, [defaultContextProcessor])
 	c.update({
 	})
 	return render_to_response('press.html', c)
 def jobs(request):
-	c = Context(defaultContext)
+	c = RequestContext(request, {}, [defaultContextProcessor])
 	c.update({
 	})
 	return render_to_response('jobs.html', c)

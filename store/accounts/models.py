@@ -7,10 +7,16 @@ from deal_site.models import Neighborhood, City
 # auth.models.User contains
 # username, first_name, last_name, email, is_active, last_login, date_joined
 
+GENDER_CHOICES = (
+	('M', 'male'),
+	('F', 'female'),
+)
+
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	middle_name = models.CharField(max_length=50, blank=True)
 	preferredString = models.CharField(max_length=50, blank=True)	# Allow them to choose fn only, firstlast, firstmiddlelast
+	sex = models.CharField(max_length=2, choices=GENDER_CHOICES, blank=True)
 	
 	twitter = models.CharField(max_length=50, blank=True)
 	url = models.URLField(verify_exists=False, blank=True)

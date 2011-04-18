@@ -12,9 +12,9 @@ class Purchase(models.Model):
 	timePurchased = models.DateTimeField()
 	
 	def __unicode__(self):
-		return str(self.user) + ' : ' + str(self.timePurchased) + ' - ' + str(self.amount)
+		return str(self.user) + ' : ' + str(self.timePurchased) + ' - $' + str(self.amount)
 	class Meta:
-		ordering = ['timePurchased']
+		ordering = ['-timePurchased']
 	
 PAYMENT_STATUS_CHOICES = (
 	('PENDING', 'Payment pending'),
@@ -41,6 +41,7 @@ class PaymentToNonprofit(models.Model):
 		return str(self.nonprofit) + ' : ' + str(self.created) + ' - ' + str(self.amount)
 	class Meta:
 		ordering = ['nonprofit', 'created']
+		db_table = 'payments_payments_to_nonprofits'
 	
 class PaymentToUs(models.Model):
 	purchase = models.ForeignKey(Purchase)					# The associated purchase transaction
@@ -57,6 +58,7 @@ class PaymentToUs(models.Model):
 		return str(self.created) + ' - ' + str(self.amount)
 	class Meta:
 		ordering = ['created']
+		db_table = 'payments_payments_to_us'
 
 class PaymentToVendor(models.Model):
 	purchase = models.ForeignKey(Purchase)					# The associated purchase transaction
@@ -74,3 +76,4 @@ class PaymentToVendor(models.Model):
 		return str(self.vendor) + ' : ' + str(self.created) + ' - ' + str(self.amount)
 	class Meta:
 		ordering = ['vendor', 'created']
+		db_table = 'payments_payments_to_vendors'
