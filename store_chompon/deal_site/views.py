@@ -6,8 +6,8 @@ from store_chompon import settings
 # Format: id, label, url
 defaultMenu = [
 		{'id': 'deal', 'label': 'Today\'s deal', 'url': '/'},
-		{'id': 'b2b', 'label': 'Save Bay to Breakers!', 'url': '/b2b/'},
-		{'id': 'story', 'label': 'Our Story', 'url': '/story/'},
+		{'id': 'b2b', 'label': 'Save Bay to Breakers!', 'url': '/bay-to-breakers/'},
+		{'id': 'story', 'label': 'Our Story', 'url': '/our-story/'},
 		{'id': 'impact', 'label': 'Impact', 'url': '/impact/'},
 		#{'id': 'community', 'label': 'Community', 'url': '/community/'},
 		{'id': 'blog', 'label': 'Blog', 'url': 'http://blog.doloresdeals.org/'},
