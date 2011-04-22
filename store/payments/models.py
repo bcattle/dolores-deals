@@ -1,14 +1,11 @@
 from django.db import models
-
 from django.contrib.auth.models import User
-#from deal_site.models import DealChoice, Benficiary, Nonprofit, Vendor
 
-# Create your models here.
 class Purchase(models.Model):
 	user = models.ForeignKey(User)
 	dealChoice = models.ForeignKey('deal_site.DealChoice')
 	qty = models.PositiveSmallIntegerField()
-	amount = models.DecimalField(max_digits=6, decimal_places=2)
+	amount = models.DecimalField(max_digits=9, decimal_places=2)
 	timePurchased = models.DateTimeField()
 	
 	def __unicode__(self):
@@ -27,12 +24,11 @@ class PaymentToNonprofit(models.Model):
 	purchase = models.ForeignKey(Purchase)					# The associated purchase transaction
 	beneficiary = models.ForeignKey('deal_site.Beneficiary')
 	nonprofit = models.ForeignKey('deal_site.Nonprofit', blank=True, null=True)		# Holds nonprofit if beneficiary is a cause
-	nonprofitAssigned = models.BooleanField()				# Did the user select a nonprofit, or do we need to
-	amount = models.DecimalField(max_digits=6, decimal_places=2)
-	status = models.CharField(max_length=12, choices=PAYMENT_STATUS_CHOICES)
+	nonprofitAssigned = models.BooleanField(default=False)				# Did the user select a nonprofit, or do we need to
+	amount = models.DecimalField(max_digits=9, decimal_places=2)
+	status = models.CharField(max_length=12, choices=PAYMENT_STATUS_CHOICES, default='PENDING')
 	lastStatusUpdated = models.DateTimeField()
 	created = models.DateTimeField(auto_now_add=True)
-	madePending = models.DateTimeField(blank=True, null=True)
 	madeProcessing = models.DateTimeField(blank=True, null=True)
 	madePaid = models.DateTimeField(blank=True, null=True)
 	madeRefunded = models.DateTimeField(blank=True, null=True)
@@ -42,14 +38,14 @@ class PaymentToNonprofit(models.Model):
 	class Meta:
 		ordering = ['nonprofit', 'created']
 		db_table = 'payments_payments_to_nonprofits'
+		verbose_name_plural = 'Payments to Nonprofits'
 	
 class PaymentToUs(models.Model):
 	purchase = models.ForeignKey(Purchase)					# The associated purchase transaction
-	amount = models.DecimalField(max_digits=6, decimal_places=2)
-	status = models.CharField(max_length=12, choices=PAYMENT_STATUS_CHOICES)
+	amount = models.DecimalField(max_digits=9, decimal_places=2)
+	status = models.CharField(max_length=12, choices=PAYMENT_STATUS_CHOICES, default='PENDING')
 	lastStatusUpdated = models.DateTimeField()
 	created = models.DateTimeField(auto_now_add=True)
-	madePending = models.DateTimeField(blank=True, null=True)
 	madeProcessing = models.DateTimeField(blank=True, null=True)
 	madePaid = models.DateTimeField(blank=True, null=True)
 	madeRefunded = models.DateTimeField(blank=True, null=True)
@@ -59,15 +55,15 @@ class PaymentToUs(models.Model):
 	class Meta:
 		ordering = ['created']
 		db_table = 'payments_payments_to_us'
+		verbose_name_plural = 'Payments to Us'
 
 class PaymentToVendor(models.Model):
 	purchase = models.ForeignKey(Purchase)					# The associated purchase transaction
 	vendor = models.ForeignKey('deal_site.Vendor', blank=True, null=True)		# Holds nonprofit if beneficiary is a cause
-	amount = models.DecimalField(max_digits=6, decimal_places=2)
-	status = models.CharField(max_length=12, choices=PAYMENT_STATUS_CHOICES)
+	amount = models.DecimalField(max_digits=9, decimal_places=2)
+	status = models.CharField(max_length=12, choices=PAYMENT_STATUS_CHOICES, default='PENDING')
 	lastStatusUpdated = models.DateTimeField()
 	created = models.DateTimeField(auto_now_add=True)
-	madePending = models.DateTimeField(blank=True, null=True)
 	madeProcessing = models.DateTimeField(blank=True, null=True)
 	madePaid = models.DateTimeField(blank=True, null=True)
 	madeRefunded = models.DateTimeField(blank=True, null=True)
@@ -77,3 +73,4 @@ class PaymentToVendor(models.Model):
 	class Meta:
 		ordering = ['vendor', 'created']
 		db_table = 'payments_payments_to_vendors'
+		verbose_name_plural = 'Payments to Vendors'

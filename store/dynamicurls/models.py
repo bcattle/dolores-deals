@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class UrlString(models.Model):
-	str = models.CharField(max_length=150, unique=True)
+	str = models.SlugField(max_length=50, unique=True)
 	
 	def __unicode__(self):
 		return self.str
@@ -11,7 +11,7 @@ class UrlString(models.Model):
 		ordering = ['str']
 		
 class TinyUrlString(models.Model):
-	str = models.CharField(max_length=10, unique=True)
+	str = models.SlugField(max_length=10, unique=True)
 	
 	def __unicode__(self):
 		return self.str

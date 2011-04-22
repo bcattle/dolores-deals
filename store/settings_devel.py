@@ -44,6 +44,11 @@ USE_I18N = False
 # calendars according to the current locale
 USE_L10N = True
 
+SITE_NAME = 'DoloreDeals.org'
+# Defaults to use if the specific page doesn't specify 
+META_KEYWORDS = '' 
+META_DESCRIPTION = ''
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = os.path.join(ROOT_PATH, 'upload')
@@ -94,6 +99,20 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
+)
+
+# List of processors used by RequestContext to populate the context.
+# Each one should be a callable that takes the request object as its
+# only parameter and returns a dictionary to add to the context.
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+#    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
+	'store.deal_site.context_processors.default',
 )
 
 MIDDLEWARE_CLASSES = (

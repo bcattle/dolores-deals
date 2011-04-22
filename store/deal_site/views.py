@@ -2,23 +2,7 @@ from django.http import HttpRequest, HttpResponse
 from django.template import Context, RequestContext
 from django.shortcuts import render_to_response
 
-def defaultContextProcessor(request):
-	# Format: id, label, url
-	defaultMenu = [
-		{'id': 'deal', 'label': 'Today\'s deal', 'url': '/'},
-		{'id': 'causes', 'label': 'Causes', 'url': '/causes/'},
-		{'id': 'impact', 'label': 'Impact', 'url': '/impact/'},
-		{'id': 'community', 'label': 'Community', 'url': '/community/'},
-		{'id': 'blog', 'label': 'Blog', 'url': 'http://blog.doloresdeals.org/'},
-	]
-	
-	return {
-		'menu_choices': defaultMenu,
-		#'current_menu_choice': '',			# Runs AFTER values passed by view?
-		'mailing_list_text': 'Sign up for our mailing list',
-	}
-
-def deal(request, deal_id = 0):
+def deal(request, deal_id = 0, template_name='deal.html'):
 	if deal_id:
 		# Get a specific deal by id
 		return HttpResponse('Got deal ' + deal_id)
@@ -31,77 +15,55 @@ def deal(request, deal_id = 0):
 			mural_file = 'mural2.jpg'
 	
 		# Get today's deal
-		c = RequestContext(request, {}, [defaultContextProcessor])
-		c.update({
+		c = {
+			# get_object_or_404()
 			'current_menu_choice': 'deal',
 			'chomp_url': chomp_url,
 			'mural_file' : mural_file,
-		})
-		return render_to_response('deal.html', c)
+		}
+		return render_to_response(template_name, c, context_instance=RequestContext(request))
 
 def login(request):
-	c = RequestContext(request, {}, [defaultContextProcessor])
-	c.update({
-	})
-	return render_to_response('coupons.html', c)
+	c = { }
+	return render_to_response('coupons.html', c, context_instance=RequestContext(request))
 def verify(request):
-	c = RequestContext(request, {}, [defaultContextProcessor])
-	c.update({
-	})
-	return render_to_response('chomp-verify.html', c)
+	c = { }
+	return render_to_response('chomp-verify.html', c, context_instance=RequestContext(request))
 def coupons(request):
-	c = RequestContext(request, {}, [defaultContextProcessor])
-	c.update({
-	})
-	return render_to_response('coupons.html', c)
+	c = { }
+	return render_to_response('coupons.html', c, context_instance=RequestContext(request))
 	
 def causes(request):
-	c = RequestContext(request, {}, [defaultContextProcessor])
-	# assert False
-	c.update({
+	c = {
 		'current_menu_choice': 'causes'
-	})
-	return render_to_response('causes.html', c)
+	}
+	return render_to_response('causes.html', c, context_instance=RequestContext(request))
 def impact(request):
-	c = RequestContext(request, {}, [defaultContextProcessor])
-	c.update({
+	c = {
 		'current_menu_choice': 'impact'
-	})
-	return render_to_response('impact.html', c)
+	}
+	return render_to_response('impact.html', c, context_instance=RequestContext(request))
 def community(request):
-	c = RequestContext(request, {}, [defaultContextProcessor])
-	c.update({
+	c = {
 		'current_menu_choice': 'community'
-	})
-	return render_to_response('community.html', c)
+	}
+	return render_to_response('community.html', c, context_instance=RequestContext(request))
 
 def thanks(request):
-	c = RequestContext(request, {}, [defaultContextProcessor])
-	c.update({
-	})
-	return render_to_response('thanks.html', c)
+	c = { }
+	return render_to_response('thanks.html', c, context_instance=RequestContext(request))
 def partners_vendors(request):
-	c = RequestContext(request, {}, [defaultContextProcessor])
-	c.update({
-	})
-	return render_to_response('partners_vendors.html', c)
+	c = { }
+	return render_to_response('partners_vendors.html', c, context_instance=RequestContext(request))
 def partners_nonprofits(request):
-	c = RequestContext(request, {}, [defaultContextProcessor])
-	c.update({
-	})
-	return render_to_response('partners_nonprofits.html', c)
+	c = { }
+	return render_to_response('partners_nonprofits.html', c, context_instance=RequestContext(request))
 def legal(request):
-	c = RequestContext(request, {}, [defaultContextProcessor])
-	c.update({
-	})
-	return render_to_response('legal.html', c)
+	c = { }
+	return render_to_response('legal.html', c, context_instance=RequestContext(request))
 def press(request):
-	c = RequestContext(request, {}, [defaultContextProcessor])
-	c.update({
-	})
-	return render_to_response('press.html', c)
+	c = { }
+	return render_to_response('press.html', c, context_instance=RequestContext(request))
 def jobs(request):
-	c = RequestContext(request, {}, [defaultContextProcessor])
-	c.update({
-	})
-	return render_to_response('jobs.html', c)
+	c = { }
+	return render_to_response('jobs.html', c, context_instance=RequestContext(request))

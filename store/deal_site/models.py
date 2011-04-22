@@ -3,27 +3,46 @@ from django.contrib.auth.models import User
 
 class City(models.Model):
 	name = models.CharField(max_length=50, unique=True)
+	slug = models.SlugField(max_length=50, unique=True)
 	abbreviation = models.CharField(max_length=10, blank=True, unique=True)
-	urlString = models.ForeignKey('dynamicurls.UrlString', blank=True, null=True, on_delete=models.SET_NULL)
-	enabled  = models.BooleanField()
+	#urlString = models.ForeignKey('dynamicurls.UrlString', blank=True, null=True, on_delete=models.SET_NULL)
+	enabled  = models.BooleanField(default=False)
+	meta_keywords = models.CharField('Meta Keywords', max_length=255, blank=True)
+	meta_description = models.CharField('Meta Description', max_length=255, blank=True)
 	
-	def __unicode__(self):
-		return self.name
 	class Meta:
 		ordering = ['name']
+		db_table = 'deal_site_cities'
+		verbose_name_plural = 'Cities'
+	def __unicode__(self):
+		return self.name
+	@models.permalink
+	def get_absolute_url(self):
+		# view, positional_args, named_args
+		return('city', (), {'city_slug': self.slug})
 
 class Neighborhood(models.Model):
 	name = models.CharField(max_length=50)
+	slug = models.SlugField(max_length=50)
 	city = models.ForeignKey(City)
-	urlString = models.ForeignKey('dynamicurls.UrlString', blank=True, null=True, on_delete=models.SET_NULL)
-	enabled  = models.BooleanField()
+	#urlString = models.ForeignKey('dynamicurls.UrlString', blank=True, null=True, on_delete=models.SET_NULL)
+	enabled  = models.BooleanField(default=False)
+	meta_keywords = models.CharField('Meta Keywords', max_length=255, blank=True)
+	meta_description = models.CharField('Meta Description', max_length=255, blank=True)
 
-	def __unicode__(self):
-		return self.city.name + ', ' + self.name
 	class Meta:
-		unique_together = ('name', 'city')
+		unique_together = (('name', 'city'), ('city', 'slug'))
 		order_with_respect_to = 'city'
 		ordering = ['city', 'name']
+	def __unicode__(self):
+		return self.city.name + ', ' + self.name
+	@models.permalink
+	def get_absolute_url(self):
+		# view, positional_args, named_args
+		return('neighborhood', (), {
+			'neighborhood_slug': self.slug,
+			'city_slug': self.city.slug
+		})
 
 class Picture(models.Model):
 	pic = models.ImageField(upload_to='uploadpics')
@@ -39,18 +58,25 @@ class Picture(models.Model):
 
 class Cause(models.Model):
 	name = models.CharField(max_length=50, unique=True)
+	slug = models.SlugField(max_length=50)
 	pictures = models.ManyToManyField(Picture, related_name='cause_pictures', blank=True, null=True)
 	htmlLong = models.TextField(max_length=2000, blank=True)
 	htmlShort = models.TextField(max_length=500, blank=True)
 	icons = models.ManyToManyField(Picture, related_name='cause_icons', blank=True, null=True)
 	
+	class Meta:
+		ordering = ['name']	
 	def __unicode__(self):
 		return self.name
-	class Meta:
-		ordering = ['name']
-	
+	@models.permalink
+	def get_absolute_url(self):
+		# view, positional_args, named_args
+		return('cause', (), {'cause_slug': self.slug})
+		# For now we don't give each city a cause page
+		
 class Nonprofit(models.Model):
 	name = models.CharField(max_length=50, unique=True)
+	slug = models.SlugField(max_length=50)
 	causes = models.ManyToManyField(Cause, blank=True, null=True)
 	neighborhood = models.ManyToManyField(Neighborhood)
 	pictures = models.ManyToManyField(Picture, blank=True, null=True)
@@ -59,11 +85,19 @@ class Nonprofit(models.Model):
 	contacts = models.ManyToManyField(User, blank=True, null=True)
 	comment = models.TextField(max_length=2000, blank=True)
 	
-	def __unicode__(self):
-		return self.name
 	class Meta:
 		ordering = ['name']
 		#order_with_respect_to = 'neighborhood'
+	def __unicode__(self):
+		return self.name
+	@models.permalink
+	def get_absolute_url(self):
+		# view, positional_args, named_args
+		return('nonprofit', (), {
+			'nonprofit_slug': self.slug,
+			'neighborhood_slug': self.neighborhood.slug,
+			'city_slug': self.neighborhood.city.slug
+		})
 	
 class Beneficiary(models.Model):
 	cause = models.ForeignKey(Cause, blank=True, null=True)
@@ -78,6 +112,7 @@ class Beneficiary(models.Model):
 	class Meta:
 		unique_together = ('cause', 'nonprofit')
 		db_table = 'deal_site_beneficiaries'
+		verbose_name_plural = 'Beneficiaries'
 
 class Vendor(models.Model):
 	name = models.CharField(max_length=50, unique=True)
@@ -85,7 +120,7 @@ class Vendor(models.Model):
 	pictures = models.ManyToManyField(Picture, blank=True, null=True)
 	htmlLong = models.TextField(max_length=2000, blank=True)
 	htmlShort = models.TextField(max_length=500, blank=True)
-	url = models.URLField(verify_exists=False, blank=True)
+	url = models.URLField(verify_exists=False, blank=True)		# TODO: turn on verify_exists for rigorous editorial process
 	contacts = models.ManyToManyField(User, blank=True, null=True)
 	comment = models.TextField(max_length=2000, blank=True)
 	
@@ -110,29 +145,42 @@ VENDOR_EMAIL_NOTIFICATION_CHOICES = (
 )
 
 class Deal(models.Model):
-	neighborhood = models.ForeignKey(Neighborhood)
+	neighborhood = models.ForeignKey(Neighborhood)			# Deal has a home neighborhood, relavence to other neighborhoods
+															# is inferred from neighborhood adjacency graph
 	headline = models.TextField(max_length=200)
+	slug = models.SlugField(max_length=50)
 	htmlLong = models.TextField(max_length=4000)
 	picture = models.ForeignKey(Picture, blank=True, null=True)
 	startDate = models.DateTimeField(blank=True, null=True)
 	endDate = models.DateTimeField(blank=True, null=True)		# These override the values in a particular DealChoice
 	vendor = models.ForeignKey(Vendor)
-	vendorEmailNotificationFrequency = models.CharField(max_length=3, choices=VENDOR_EMAIL_NOTIFICATION_CHOICES, blank=True, null=True)
+	vendorEmailNotificationFrequency = models.CharField(max_length=3, choices=VENDOR_EMAIL_NOTIFICATION_CHOICES, blank=True)
 	defaultBeneficiary = models.ForeignKey(Beneficiary)
-	beneficiaryCanChange = models.BooleanField()
-	urlString = models.ForeignKey('dynamicurls.UrlString', blank=True, null=True)
-	tinyUrlString = models.ForeignKey('dynamicurls.TinyUrlString', blank=True, null=True)
-	status = models.CharField(max_length=3, choices=DEAL_STATUS_CHOICES)
+	beneficiaryCanChange = models.BooleanField(default=True)
+	#urlString = models.ForeignKey('dynamicurls.UrlString', blank=True, null=True)
+	#tinyUrlString = models.ForeignKey('dynamicurls.TinyUrlString', blank=True, null=True)
+	status = models.CharField(max_length=3, choices=DEAL_STATUS_CHOICES, default='EDT')
 	created = models.DateTimeField(auto_now_add=True)
+	updated = models.DateTimeField(auto_now=True)
 	createdBy = models.ForeignKey(User, related_name='deal_createdBy')
 	approvedBy = models.ForeignKey(User, related_name='deal_approvedBy', blank=True, null=True)
-	
-	def __unicode__(self):
-		return self.vendor.name + ' : ' + self.headline
+	meta_keywords = models.CharField('Meta Keywords', max_length=255, blank=True)
+	meta_description = models.CharField('Meta Description', max_length=255, blank=True)
+
 	class Meta:
 		ordering = ['startDate', 'vendor']
 		order_with_respect_to = 'neighborhood'
-	
+		unique_together = ('neighborhood', 'slug')
+	def __unicode__(self):
+		return self.vendor.name + ' : ' + self.headline
+	@models.permalink
+	def get_absolute_url(self):
+		# view, positional_args, named_args
+		return('deal', (), {
+			'deal_slug': self.slug, 
+			'neighborhood_slug': self.neighborhood.slug,
+			'city_slug': self.neighborhood.city.slug
+		})
 	
 class DealChoice(models.Model):
 	deal = models.ForeignKey(Deal)
@@ -143,9 +191,9 @@ class DealChoice(models.Model):
 	startDate = models.DateTimeField(blank=True, null=True)
 	endDate = models.DateTimeField(blank=True, null=True)
 	
-	price = models.DecimalField(max_digits=6, decimal_places=2)
-	regPrice = models.DecimalField(max_digits=6, decimal_places=2)
-	amtToCharity = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+	price = models.DecimalField(max_digits=9, decimal_places=2)
+	regPrice = models.DecimalField(max_digits=9, decimal_places=2)
+	dollarsToCharity = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True)
 	percentToCharity = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 	
 	minQty = models.PositiveIntegerField(blank=True, null=True)			# Or the deal won't happen (TODO)
@@ -168,15 +216,17 @@ class DealRun(models.Model):
 	class Meta:
 		ordering = ['-start', 'deal']
 		
-class ActiveDeal(models.Model):
-	""" 
-	Lists the active deal in every neighborhood,
-	null if no deal is active. 
-	"""
-	neighborhood = models.ForeignKey(Neighborhood)
-	deal = models.ForeignKey(Deal, blank=True, null=True)
+# Inflexible? or implement this as a kind of cache
+# that avoids the neighborhood-adjacency logic?
+# class ActiveDeal(models.Model):
+	# """ 
+	# Lists the active deal in every neighborhood,
+	# null if no deal is active. 
+	# """
+	# neighborhood = models.ForeignKey(Neighborhood)
+	# deal = models.ForeignKey(Deal, blank=True, null=True)
 	
-	def __unicode__(self):
-		return str(self.neighborhood) + ', active: ' + str(self.deal)
-	class Meta:
-		ordering = ['neighborhood']
+	# def __unicode__(self):
+		# return str(self.neighborhood) + ', active: ' + str(self.deal)
+	# class Meta:
+		# ordering = ['neighborhood']
