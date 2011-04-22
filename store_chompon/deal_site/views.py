@@ -6,8 +6,9 @@ from store_chompon import settings
 # Format: id, label, url
 defaultMenu = [
 		{'id': 'deal', 'label': 'Today\'s deal', 'url': '/'},
-		#{'id': 'causes', 'label': 'Causes', 'url': '/causes/'},
-		#{'id': 'impact', 'label': 'Impact', 'url': '/impact/'},
+		{'id': 'b2b', 'label': 'Save Bay to Breakers!', 'url': '/b2b/'},
+		{'id': 'story', 'label': 'Our Story', 'url': '/story/'},
+		{'id': 'impact', 'label': 'Impact', 'url': '/impact/'},
 		#{'id': 'community', 'label': 'Community', 'url': '/community/'},
 		{'id': 'blog', 'label': 'Blog', 'url': 'http://blog.doloresdeals.org/'},
 	]
@@ -63,6 +64,18 @@ def causes(request):
 		'current_menu_choice': 'causes'
 	})
 	return render_to_response('causes.html', c)
+def story(request):
+	c = Context(defaultContext)
+	c.update({
+		'current_menu_choice': 'story'
+	})
+	return render_to_response('story.html', c)
+def b2b(request):
+	c = Context(defaultContext)
+	c.update({
+		'current_menu_choice': 'b2b'
+	})
+	return render_to_response('b2b.html', c)
 def impact(request):
 	c = Context(defaultContext)
 	c.update({
