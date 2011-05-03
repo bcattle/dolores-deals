@@ -1044,6 +1044,37 @@ a:hover.comment-reply-link	{text-decoration:none;}
 					
 					
 				}
+				
+#numSoldSidebar	{
+					width:170px;
+					height:28px;
+					overflow:hidden;
+					padding:15px;
+					background:rgb(247, 242, 229);
+					
+					position:absolute;
+					top:642px;
+					left:18px;
+					
+					border-radius:10px;
+					-moz-border-radius:10px;
+					-khtml-border-radius:10px;
+					-webkit-border-radius:10px;
+					
+					
+				}
+				
+div#numSoldSidebar h1 {
+					color: #777777;
+					font-size: 26px;
+					width: 170px;
+					font: Georgia,"Times New Roman",Times,serif;
+					letter-spacing: -1px;
+					position: relative;
+					margin: 0;
+					padding: 0;
+					text-align: center;
+				}
 
 /* ---- Right Sidebar ---- */
 
