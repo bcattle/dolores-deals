@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 
 {# 		deal.html													#}
-{# 		Bryan Cattle - 2/27/2011									#}
+{# 		Bryan Cattle - 5/3/2011										#}
 {# 		Deal presentation template									#}
-
-{% block title %}DoloresDeals.org | A better deal for your neighborhood{% endblock %}
 
 {% block content %}
 	<!-- Start Slider -->
@@ -24,44 +22,18 @@
 			<div style="position:relative;">
 				{% include 'includes/nonprofit.html' %}
 				
-				<iframe style="margin:0 0 0 0; overflow: hidden;" src="{{ chomp_url }}" frameborder="0" border="0" width="980" height="1800" allowtransparency="true" scrolling="no" id="chompon"></iframe>
-				<a id="chompon_popup" href="#"></a>
-				<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
-				<script type="text/javascript" src="http://www.chompon.com/fancybox/jquery.fancybox-1.3.4.pack.js?v=5"></script>
-				<link rel="stylesheet" href="http://www.chompon.com/fancybox/jquery.fancybox-1.3.4.css?v=5" type="text/css" media="screen">
-				<script>
-				function resizeIframe(height){ 
-					document.getElementById('chompon').height = parseInt(height)+80; 
-				} 
-				function getCOUrlVars(){ 
-					if(window.location.href.indexOf('?') != -1) 
-						return (''+window.location.href.slice(window.location.href.indexOf('?') + 1)); 
-						else 
-							return '';
-				} 
-				document.getElementById('chompon').src += getCOUrlVars(); 
-				$(document).ready(function(){
-					$("a#chompon_popup").fancybox({'scrolling':'no','hideOnContentClick':false,'type':'iframe','autoDimensions':false,'centerOnScroll':true});
-				});
-				function OpeniFrameURL(url, wh, ht) {
-					if(url=='close') {
-						$.fancybox.close(); 
-						return;
-					}
-					$("#chompon_popup").attr("href", url); 
-					$("#chompon_popup").trigger('click'); 
-					$("#fancybox-wrap").css({
-						'width': (parseInt(wh)+20)+'px', 
-						'height': (parseInt(ht)+20)+'px', 
-						'left': ($(window).width()-parseInt(wh)-60)/2+'px'
-					}); 
-					$("#fancybox-content").css({
-						'width': wh+'px', 
-						'height': ht+'px'
-					});
-				} 
-				function SetChomponURL(url){ document.getElementById('chompon').src=url;}
-				</script>
+				<h1>{{ deal.headline }}</h1>
+				<h3>{{ deal.subheadline }}</h3>
+				
+				<ul>
+					<li>Price: {{ defaultDealChoice.price }}</li>
+					<li>Value: {{ defaultDealChoice.regPrice }}</li>
+					<li>Discount: {{ defaultDealChoice.discountDollars }}</li>
+					<li>You save: {{ defaultDealChoice.discountPercent }}</li>
+					<li>Time remaining: </li>
+					<li>Num purchased: {{ deal.getNumPurchased}}</li>
+				</ul>
+				
 			</div>
 		</div>
 	</div>

@@ -1,11 +1,9 @@
 <div id="dealSidebar">
-	<div><h3><span style="color:green">50%</span> of every ticket sold is donated to the Women's Initiative for Self-Employment</h3></div>
-	<div><a href="http://www.womensinitiative.org/"><img src="{{ STATIC_URL }}images/deal/wi_logo.png" width="227"></a></div>
+	<!-- <div><h3><span style="color:green">50%</span> of every ticket sold is donated to the Women's Initiative for Self-Employment</h3></div> -->
+	{#<!-- Method returns '$1 from</span>' or '30% of</span>' -->#}
+	<div><h3><span style="color:green">{{ defaultDealChoice.getDonationString }} of every sale is donated to {{ nonprofit.name }}</h3></div>
+	<div><a href="{{ nonprofit.url }}"><img src="{{ STATIC_URL }}images/deal/wi_logo.png" width="227"></a></div>
 	<div style="margin:15px 0px;">
-		<strong>Women's Initiative for Self Employment</strong>, located at 1398 Valencia in the Mission is a Bay Area non-profit which provides high-potential, lower-income women the training, resources and on-going support to start and grow businesses. The business management training, technical assistance, and financial services we provide - in English and Spanish - improve the quality of life for the women we serve, their families and our communities.
-
-	</div>
-	<div style="margin:auto;">
-		<iframe title="YouTube video player" width="228" height="179" src="http://www.youtube.com/embed/9gRdJEhpi5g" frameborder="0" allowfullscreen></iframe>
+		{{ nonprofit.htmlLong }}
 	</div>
 </div>

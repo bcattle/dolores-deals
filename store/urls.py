@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
-from store import deal_site
+import deal_site
+#from store import deal_site
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -12,5 +13,5 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
 
-	(r'^', include(deal_site.urls)),
+	(r'^', include('deal_site.urls')),
 )

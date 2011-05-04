@@ -12,6 +12,7 @@ def default(request):
 	
 	return {
 		'site_name': settings.SITE_NAME,
+		'page_title': settings.PAGE_TITLE,
 		'meta_keywords': settings.META_KEYWORDS,
 		'meta_description': settings.META_DESCRIPTION,
 		'menu_choices': defaultMenu,

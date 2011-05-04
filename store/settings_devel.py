@@ -45,9 +45,10 @@ USE_I18N = False
 USE_L10N = True
 
 SITE_NAME = 'DoloreDeals.org'
-# Defaults to use if the specific page doesn't specify 
-META_KEYWORDS = '' 
-META_DESCRIPTION = ''
+# Defaults to use if the specific page doesn't specify
+PAGE_TITLE = 'DoloresDeals.org | A better deal for your neighborhood'
+META_KEYWORDS = 'DoloresDeals, local deal, neighborhood deal, daily deal, nonprofit, cause, benefit deal' 
+META_DESCRIPTION = 'DoloresDeals is a daily deals site focused on your neighborhood. Each deal benefits a local charity.'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"

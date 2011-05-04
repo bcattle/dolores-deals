@@ -1,8 +1,66 @@
 from django.http import HttpRequest, HttpResponse
 from django.template import Context, RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 
-def deal(request, deal_id = 0, template_name='deal.html'):
+from deal_site.models import City, Neighborhood, Deal
+
+def show_city(request, city_slug, template_name='city.html'):
+	cities_enabled = City.objects.filter(enabled=True)
+	city = get_object_or_404(cities_enabled, slug=city_slug)
+	c = {
+		'city': city,
+		'page_title': 'DoloresDeals.org - ' + city.name + ' deals that help your neighborhood',
+	}
+	if city.meta_keywords:
+		c['meta_keywords'] = city.meta_keywords
+	if city.meta_description:
+		c['meta_description'] = city.meta_description
+	return render_to_response(template_name, c, context_instance=RequestContext(request))
+
+def show_neighborhood(request, city_slug, neighborhood_slug, template_name='neighborhood.html'):
+	cities_enabled = City.objects.filter(enabled=True)
+	city = get_object_or_404(cities_enabled, slug=city_slug)
+	neighborhoods_enabled = Neighborhood.objects.filter(city=city, enabled=True)
+	neighborhood = get_object_or_404(neighborhoods_enabled, slug=neighborhood_slug)
+	c = {
+		'city': city,
+		'neighborhood': neighborhood,
+		'page_title': 'DoloresDeals.org - deals that help ' + neighborhood.name
+	}
+	if neighborhood.meta_keywords:
+		c['meta_keywords'] = neighborhood.meta_keywords
+	if neighborhood.meta_description:
+		c['meta_description'] = neighborhood.meta_description
+	return render_to_response(template_name, c, context_instance=RequestContext(request))
+	
+def show_deal(request, city_slug, neighborhood_slug, deal_slug, template_name='deal.html'):
+	cities_enabled = City.objects.filter(enabled=True)
+	city = get_object_or_404(cities_enabled, slug=city_slug)
+	neighborhoods_enabled = Neighborhood.objects.filter(city=city, enabled=True)
+	neighborhood = get_object_or_404(neighborhoods_enabled, slug=neighborhood_slug)
+	deals_enabled = Deal.objects.filter(neighborhood=neighborhood, public=True)
+	deal = get_object_or_404(deals_enabled, slug=deal_slug)
+	defaultDealChoice = dealChoice.objects.filter(deal=deal, index=1)
+	c = {
+		'city': city,
+		'neighborhood': neighborhood,
+		'deal': deal,
+		'defaultDealChoice': defaultDealChoice,
+		'page_title': 'DoloresDeals.org - ' + neighborhood.name + ' : ' + deal.headline
+	}
+	if deal.meta_keywords:
+		c['meta_keywords'] = deal.meta_keywords
+	if deal.meta_description:
+		c['meta_description'] = deal.meta_description
+	return render_to_response(template_name, c, context_instance=RequestContext(request))
+	
+def show_nonprofit(request, nonprofit_slug, template_name='nonprofit.html'):
+	pass
+
+def show_cause(request, cause_slug, template_name='cause.html'):
+	pass
+	
+def deal(request, deal_id = 0, template_name='deal_old.html'):
 	if deal_id:
 		# Get a specific deal by id
 		return HttpResponse('Got deal ' + deal_id)

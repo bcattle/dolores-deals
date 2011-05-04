@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from payments.models import Purchase
 
 class City(models.Model):
 	name = models.CharField(max_length=50, unique=True)
@@ -19,7 +20,7 @@ class City(models.Model):
 	@models.permalink
 	def get_absolute_url(self):
 		# view, positional_args, named_args
-		return('city', (), {'city_slug': self.slug})
+		return('city_index', (), {'city_slug': self.slug})
 
 class Neighborhood(models.Model):
 	name = models.CharField(max_length=50)
@@ -39,7 +40,7 @@ class Neighborhood(models.Model):
 	@models.permalink
 	def get_absolute_url(self):
 		# view, positional_args, named_args
-		return('neighborhood', (), {
+		return('neighborhood_index', (), {
 			'neighborhood_slug': self.slug,
 			'city_slug': self.city.slug
 		})
@@ -80,8 +81,10 @@ class Nonprofit(models.Model):
 	causes = models.ManyToManyField(Cause, blank=True, null=True)
 	neighborhood = models.ManyToManyField(Neighborhood)
 	pictures = models.ManyToManyField(Picture, blank=True, null=True)
+	sidebarLogo = models.ForeignKey(Picture, related_name='nonprofit_sidebarLogo', blank=True, null=True)
 	htmlLong = models.TextField(max_length=2000, blank=True)
 	htmlShort = models.TextField(max_length=500, blank=True)
+	url = models.URLField(verify_exists=False, blank=True)		# TODO: turn on verify_exists for rigorous editorial process
 	contacts = models.ManyToManyField(User, blank=True, null=True)
 	comment = models.TextField(max_length=2000, blank=True)
 	
@@ -148,6 +151,7 @@ class Deal(models.Model):
 	neighborhood = models.ForeignKey(Neighborhood)			# Deal has a home neighborhood, relavence to other neighborhoods
 															# is inferred from neighborhood adjacency graph
 	headline = models.TextField(max_length=200)
+	subheadline = models.TextField(max_length=200)
 	slug = models.SlugField(max_length=50)
 	htmlLong = models.TextField(max_length=4000)
 	picture = models.ForeignKey(Picture, blank=True, null=True)
@@ -159,7 +163,12 @@ class Deal(models.Model):
 	beneficiaryCanChange = models.BooleanField(default=True)
 	#urlString = models.ForeignKey('dynamicurls.UrlString', blank=True, null=True)
 	#tinyUrlString = models.ForeignKey('dynamicurls.TinyUrlString', blank=True, null=True)
+	#related = models.ManyToManyField('self', blank=True, null=True)		# This replaces the 'DealChoice' class
+																		# after the customer buys, they are presented 
+																		# the opportunity to choose between the "related" deals
 	status = models.CharField(max_length=3, choices=DEAL_STATUS_CHOICES, default='EDT')
+	public = models.BooleanField(default=False)				# Is the deal publically-visible? Allows completed 
+															# deals to persist for some amount of time
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
 	createdBy = models.ForeignKey(User, related_name='deal_createdBy')
@@ -167,6 +176,10 @@ class Deal(models.Model):
 	meta_keywords = models.CharField('Meta Keywords', max_length=255, blank=True)
 	meta_description = models.CharField('Meta Description', max_length=255, blank=True)
 
+	def getTimeRemainingString(self):
+		
+	def getNumPurchased(self):
+		return Purchase.objects.filter(dealChoice__deal=deal).count()
 	class Meta:
 		ordering = ['startDate', 'vendor']
 		order_with_respect_to = 'neighborhood'
@@ -176,7 +189,7 @@ class Deal(models.Model):
 	@models.permalink
 	def get_absolute_url(self):
 		# view, positional_args, named_args
-		return('deal', (), {
+		return('deal_page', (), {
 			'deal_slug': self.slug, 
 			'neighborhood_slug': self.neighborhood.slug,
 			'city_slug': self.neighborhood.city.slug
@@ -185,20 +198,29 @@ class Deal(models.Model):
 class DealChoice(models.Model):
 	deal = models.ForeignKey(Deal)
 	index = models.PositiveSmallIntegerField()
-	title = models.TextField(max_length=200)
-	descriptionHtml = models.TextField(max_length=4000, blank=True)
+	descriptionHtml = models.TextField(max_length=500, blank=True)
 	picture = models.ForeignKey(Picture, blank=True, null=True)
-	startDate = models.DateTimeField(blank=True, null=True)
-	endDate = models.DateTimeField(blank=True, null=True)
+	#startDate = models.DateTimeField(blank=True, null=True)
+	#endDate = models.DateTimeField(blank=True, null=True)
 	
 	price = models.DecimalField(max_digits=9, decimal_places=2)
 	regPrice = models.DecimalField(max_digits=9, decimal_places=2)
+	# One or the other, keeps nice round numbers
 	dollarsToCharity = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True)
 	percentToCharity = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 	
 	minQty = models.PositiveIntegerField(blank=True, null=True)			# Or the deal won't happen (TODO)
 	maxQty = models.PositiveIntegerField(blank=True, null=True)
 	
+	def getDonationString(self):
+		if self.dollarsToCharity:
+			return '$' + str(self.dollarsToCharity) + '</span> from'
+		else:
+			return str(self.percentToCharity) + '%</span> of'
+	def discountDollars(self):
+		return '%.2f' % (self.regPrice - self.price)
+	def discountPercent(self):
+		return '%d' % ((self.price / self.regPrice) * 100)
 	def __unicode__(self):
 		return str(self.deal.vendor) + ': (opt ' + str(self.index) + ') - ' + self.title
 	class Meta:
