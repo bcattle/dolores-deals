@@ -7,6 +7,7 @@ from deal.models import Deal, DealChoice
 from deal.shortcuts import get_deal_or_404
 	
 def buy_deal(request, city_slug, neighborhood_slug, deal_slug, template_name='buy_deal.html'):
+	# Need to be logged in
 	city = get_city_or_404(city_slug)
 	neighborhood = get_neighborhood_or_404(city, neighborhood_slug)
 	deal = get_deal_or_404(neighborhood, deal_slug)

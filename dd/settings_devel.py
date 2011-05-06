@@ -151,6 +151,7 @@ INSTALLED_APPS = (
 	'base_util',
 	'deal',
 	'deal_processing',
+	'deal_affiliates',
 	'hyperlocal',
 	'nonprofit',
 )
