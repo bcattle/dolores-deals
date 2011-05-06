@@ -1,0 +1,19 @@
+[
+{"pk": 1, "model": "auth.group", "fields": {"name": "Admins", "permissions": []}}, 
+{"pk": 2, "model": "auth.group", "fields": {"name": "Editors", "permissions": []}}, 
+{"pk": 3, "model": "auth.group", "fields": {"name": "Writers", "permissions": []}}, 
+
+{"pk": 1, "model": "auth.user", "fields": {"username": "bryan", "first_name": "Bryan", "last_name": "Cattle", "is_active": true, "is_superuser": true, "is_staff": true, "last_login": "2011-04-16 17:42:51", "groups": [], "user_permissions": [], "password": "sha1$a186b$beef6670d2d118dc49ca7d0056066fa638d10e19", "email": "bryan@doloresdeals.org", "date_joined": "2011-04-16 16:17:25"}}, 
+{"pk": 2, "model": "auth.user", "fields": {"username": "ethan", "first_name": "Ethan", "last_name": "Montoya", "is_active": true, "is_superuser": true, "is_staff": true, "last_login": "2011-04-16 18:17:00", "groups": [], "user_permissions": [], "password": "sha1$d02de$2e696ad69933734a89c4238a8285013b67e3331a", "email": "ethan@doloresdeals.org", "date_joined": "2011-04-16 18:17:00"}}, 
+{"pk": 3, "model": "auth.user", "fields": {"username": "brent", "first_name": "Brent", "last_name": "Perez", "is_active": true, "is_superuser": true, "is_staff": true, "last_login": "2011-04-16 18:17:07", "groups": [], "user_permissions": [], "password": "sha1$5e7ec$c7c77432f37f453abc9a10005610f4214c724636", "email": "brent@doloresdeals.org", "date_joined": "2011-04-16 18:17:07"}}, 
+{"pk": 4, "model": "auth.user", "fields": {"username": "user1", "first_name": "User", "last_name": "One", "is_active": true, "is_superuser": false, "is_staff": false, "last_login": "2011-04-16 18:17:26", "groups": [], "user_permissions": [], "password": "sha1$f72c4$6c6c16c6cae98e1c9b46abfd286e8d54566c7d2d", "email": "user1@gmail.com", "date_joined": "2011-04-16 18:17:26"}}, 
+{"pk": 5, "model": "auth.user", "fields": {"username": "user2", "first_name": "User", "last_name": "Two", "is_active": true, "is_superuser": false, "is_staff": false, "last_login": "2011-04-16 18:17:36", "groups": [], "user_permissions": [], "password": "sha1$6b91c$b05678252bd5928223798655de29cc9eabaee7a2", "email": "user2@gmail.com", "date_joined": "2011-04-16 18:17:36"}}, 
+{"pk": 6, "model": "auth.user", "fields": {"username": "user3", "first_name": "User", "last_name": "Three", "is_active": true, "is_superuser": false, "is_staff": false, "last_login": "2011-04-16 18:17:48", "groups": [], "user_permissions": [], "password": "sha1$437fb$e481be11c954a683015ba019ae7a481794c89cb3", "email": "user3@gmail.com", "date_joined": "2011-04-16 18:17:48"}},
+
+{"pk": 1, "model": "base_accounts.userprofile", "fields": {"middle_name": "Christopher", "defaultCity": 1, "url": "http://www.quora.com/Bryan-Cattle", "twitter": "bcattle", "pic": "profilepics/SPUDS.jpg", "defaultNeighborhood": 1, "user": 1, "preferredString": "Bryan"}}, 
+{"pk": 2, "model": "base_accounts.userprofile", "fields": {"middle_name": "", "defaultCity": 1, "url": "", "twitter": "", "pic": "", "defaultNeighborhood": 1, "user": 2, "preferredString": "Ethan"}}, 
+{"pk": 3, "model": "base_accounts.userprofile", "fields": {"middle_name": "", "defaultCity": 1, "url": "", "twitter": "", "pic": "", "defaultNeighborhood": 1, "user": 3, "preferredString": "Brent"}}, 
+{"pk": 4, "model": "base_accounts.userprofile", "fields": {"middle_name": "", "defaultCity": null, "url": "", "twitter": "", "pic": "", "defaultNeighborhood": null, "user": 4, "preferredString": "User1"}}, 
+{"pk": 5, "model": "base_accounts.userprofile", "fields": {"middle_name": "", "defaultCity": null, "url": "", "twitter": "", "pic": "", "defaultNeighborhood": null, "user": 5, "preferredString": "User2"}}, 
+{"pk": 6, "model": "base_accounts.userprofile", "fields": {"middle_name": "", "defaultCity": null, "url": "", "twitter": "", "pic": "", "defaultNeighborhood": null, "user": 6, "preferredString": "User3"}} 
+]

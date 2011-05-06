@@ -1,0 +1,9 @@
+[
+	{"pk": 2, "model": "nonprofit.cause", "fields": {"htmlLong": "", "icons": [], "name": "Animal rights", "htmlShort": "", "pictures": [], "slug": "animal-rights"}}, 
+	{"pk": 5, "model": "nonprofit.cause", "fields": {"htmlLong": "", "icons": [], "name": "Education", "htmlShort": "", "pictures": [], "slug": "education"}}, 
+	{"pk": 3, "model": "nonprofit.cause", "fields": {"htmlLong": "", "icons": [], "name": "Gay rights", "htmlShort": "", "pictures": [], "slug": "gay-rights"}}, 
+	{"pk": 1, "model": "nonprofit.cause", "fields": {"htmlLong": "", "icons": [], "name": "Homelessness", "htmlShort": "", "pictures": [], "slug": "homelessness"}}, 
+	{"pk": 4, "model": "nonprofit.cause", "fields": {"htmlLong": "", "icons": [], "name": "Women's equality", "htmlShort": "", "pictures": [], "slug": "womens-equality"}}, 
+
+	{"pk": 1, "model": "nonprofit.nonprofit", "fields": {"comment": "", "neighborhoods": [1], "name": "Women's Initiative for Self Employment", "contacts": [], "pictures": [1, 2], "sidebarLogo": 2, "htmlShort": "", "htmlLong": "<p>The <strong>Women's Initiative for Self Employment</strong>, located at 1398 Valencia in the Mission is a Bay Area non-profit which provides high-potential, lower-income women the training, resources and on-going support to start and grow businesses. The business management training, technical assistance, and financial services we provide - in English and Spanish - improve the quality of life for the women we serve, their families and our communities.</p><p><iframe title=\"YouTube video player\" width=\"228\" height=\"179\" src=\"http://www.youtube.com/embed/9gRdJEhpi5g\" frameborder=\"0\" allowfullscreen></iframe></p>", "causes": [4], "slug": "womens-initiative", "url": "http://www.womensinitiative.org/", "enabled": true}}
+]

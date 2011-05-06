@@ -1,9 +1,0 @@
-<div id="dealSidebar">
-	<!-- <div><h3><span style="color:green">50%</span> of every ticket sold is donated to the Women's Initiative for Self-Employment</h3></div> -->
-	{#<!-- Method returns '$1 from</span>' or '30% of</span>' -->#}
-	<div><h3><span style="color:green">{{ defaultDealChoice.getDonationString }} of every sale is donated to {{ nonprofit.name }}</h3></div>
-	<div><a href="{{ nonprofit.url }}"><img src="{{ STATIC_URL }}images/deal/wi_logo.png" width="227"></a></div>
-	<div style="margin:15px 0px;">
-		{{ nonprofit.htmlLong }}
-	</div>
-</div>

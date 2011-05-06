@@ -1,0 +1,8 @@
+[
+	{"pk": "5a1a812ac01cde6270b9a77a7d7fed33", "model": "sessions.session", "fields": {"expire_date": "2011-04-30 17:42:51", "session_data": "YWZlNjY4YTc2ZmY1NzRjMjRjYmJhODQ2YWU3NWE1YWMwN2FmYWJlZTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQRLAXUu\n"}}, 
+	{"pk": 1, "model": "sites.site", "fields": {"domain": "example.com", "name": "example.com"}}, 
+	
+	{"pk": 1, "model": "base_util.picture", "fields": {"related": [2], "pic": "uploadpics/WI_Logo_1.png", "description": "", "createdBy": 1, "created": "2011-04-16 18:39:01"}}, 
+	{"pk": 2, "model": "base_util.picture", "fields": {"related": [1], "pic": "uploadpics/WI_Logo151_720x486.jpg", "description": "", "createdBy": 1, "created": "2011-04-16 18:39:18"}}, 
+	{"pk": 3, "model": "base_util.picture", "fields": {"related": [], "pic": "uploadpics/3210.jpg", "description": "", "createdBy": 1, "created": "2011-04-16 18:40:44"}}
+]

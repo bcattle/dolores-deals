@@ -1,0 +1,19 @@
+[
+	{"pk": 3, "model": "hyperlocal.city", "fields": {"abbreviation": "AUS", "enabled": false, "name": "Austin", "slug": "austin"}}, 
+	{"pk": 7, "model": "hyperlocal.city", "fields": {"abbreviation": "BOS", "enabled": false, "name": "Boston", "slug": "boston"}}, 
+	{"pk": 6, "model": "hyperlocal.city", "fields": {"abbreviation": "CLT", "enabled": false, "name": "Charlotte", "slug": "charlotte"}}, 
+	{"pk": 9, "model": "hyperlocal.city", "fields": {"abbreviation": "LA", "enabled": false, "name": "Los Angeles", "slug": "los-angeles"}}, 
+	{"pk": 8, "model": "hyperlocal.city", "fields": {"abbreviation": "NO", "enabled": false, "name": "New Orleans", "slug": "new-orleans"}}, 
+	{"pk": 5, "model": "hyperlocal.city", "fields": {"abbreviation": "NY", "enabled": true, "name": "New York", "slug": "new-york"}}, 
+	{"pk": 10, "model": "hyperlocal.city", "fields": {"abbreviation": "PHI", "enabled": false, "name": "Philadelphia", "slug": "philadelphia"}}, 
+	{"pk": 4, "model": "hyperlocal.city", "fields": {"abbreviation": "PDX", "enabled": false, "name": "Portland", "slug": "portland"}}, 
+	{"pk": 1, "model": "hyperlocal.city", "fields": {"abbreviation": "SF", "enabled": true, "name": "San Francisco", "slug": "san-francisco"}}, 
+	{"pk": 2, "model": "hyperlocal.city", "fields": {"abbreviation": "SEA", "enabled": false, "name": "Seattle", "slug": "seattle"}}, 
+
+	{"pk": 1, "model": "hyperlocal.neighborhood", "fields": {"city": 1, "_order": 0, "enabled": true, "name": "The Mission", "slug": "mission"}}, 
+	{"pk": 5, "model": "hyperlocal.neighborhood", "fields": {"city": 2, "_order": 0, "enabled": false, "name": "Capital Hill", "slug": "capital-hill"}}, 
+	{"pk": 2, "model": "hyperlocal.neighborhood", "fields": {"city": 1, "_order": 1, "enabled": false, "name": "Castro", "slug": "castro"}}, 
+	{"pk": 6, "model": "hyperlocal.neighborhood", "fields": {"city": 2, "_order": 1, "enabled": false, "name": "Wallingford", "slug": "wallingford"}}, 
+	{"pk": 3, "model": "hyperlocal.neighborhood", "fields": {"city": 1, "_order": 2, "enabled": false, "name": "Lower Haight", "slug": "lower-haight"}}, 
+	{"pk": 4, "model": "hyperlocal.neighborhood", "fields": {"city": 1, "_order": 3, "enabled": false, "name": "Upper Haight", "slug": "upper-haight"}}
+]
