@@ -1,0 +1,48 @@
+request.session['']
+
+Saved when request.session is modified
+SESSION_SAVE_EVERY_REQUEST = True	will save every time
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True		sessions persist for two weeks by default
+
+
+Test for login:
+if request.user.is_authenticated():
+	...
+
+User.
+set_password()
+check_password()
+has_perm() / has_perms()
+
+Checks user credentials --
+user = auth.authenticate(username='', password='')
+if user is not None:
+	...
+
+Actually logs them in, saving session data --
+auth.login(request,user)
+
+
+A sample view --
+
+def login_view(request):
+	username = request.POST.get('username','')
+	password = request.POST.get('password','')
+	user = auth.authenticate(username=username, password=password)
+	if user is not None and user.is_active:
+		auth.login(request, user)
+		# Redirect to success page
+	else:
+		# Show an error page
+		return HttpResponseRedirect("/account/invalid")
+
+To logout
+auth.logout(request)
+
+
+To create a user
+user = User.objects.create_user(username='', email='', password='')
+
+
+Login pages need to use SSL

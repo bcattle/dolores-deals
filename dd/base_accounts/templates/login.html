@@ -10,7 +10,19 @@
 	<div id="content">
 		<!-- Top Three Featured Boxes -->
 		<div class="box">
+			{% if form.errors %}
+				<p class="error>Sorry, that username or password is invalid</p>
+			{% endif %}
 			
+			<form action="" method="post">
+				<label for="username">User name:</label>
+				<input type="text" name="username" value="" id="username" />
+				<label for="password">Password:</label>
+				<input type="password" name="password" value="" id="password" />
+				
+				<input type="submit" value="login" />
+				<input type="hidden" name="next" value="{{ next|escape }}" />
+			</form>
 		</div>
 	</div>
 </div>
