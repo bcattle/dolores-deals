@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{# 		deal_buy.html												#}
+{# 		Bryan Cattle - 5/6/2011										#}
+{# 		Thanks message after a form response						#}
+
+{% block content %}
+<!-- Start Content Wrapper -->
+<div id="content_wrapper">
+	<!-- Content Area -->
+	<div id="content">
+		<!-- Top Three Featured Boxes -->
+		<div class="box">
+			<form action="{{ request.path }}" method="post">{% csrf_token %}
+				<!-- Enumerate deal choices -->
+				<h3>Your purchase</h3>
+				<ul>
+					{% for choice in dealChoices %}
+					<li>
+						{% if choice.enabled %}
+							<div class="dealChoiceEnabled">
+						{% else %}
+							<div class="dealChoiceDisabled">
+						{% endif %}
+						<input type="radio" name="dealChoice" value="dealChoice_{{ forloop.counter0 }}" />{{ choice.descriptionHtml|safe }} - <input type="text" name="dealChoice_{{ forloop.counter0 }}" value="1" class="dealChoiceQty" /> x {{ choice.price }} = {{ choice.price }}
+					</div></li>
+					{% endfor %}
+					<li><h5>Total: $15</h5></li>
+				</ul>
+				<!-- Let the user select which nonprofit to donate to -->
+				<h3>Your proceeds go to</h3>
+				<ul>
+
+				</ul>
+				<!-- Link to sign in/facebook connect -->
+				<h3>Bought from us before?</h3>
+				<ul>
+					<li><a href="{% url django.contrib.auth.views.login %}?next={{ request.path }}">Login</a></li>
+					<li><a href="">Facebook connect</a></li>
+				</ul>
+				<!-- New user form -->
+				<h3>Personal information</h3>
+				<ul>
+					{{ newUserForm.as_ul }}
+				</ul>
+				<!-- Buy form -->
+				<h3>Billing information</h3>
+				<ul>
+					{{ buyForm.as_ul }}
+				</ul>
+				<input type="submit" value="Place order" />
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -31,9 +31,9 @@
 						<li>Value: ${{ defaultDealChoice.regPrice }}</li>
 						<li>Discount: {{ defaultDealChoice.discountDollars }}</li>
 						<li>You save: {{ defaultDealChoice.discountPercent }}</li>
-						<li>Time remaining: {{ currDeal.getTimeRemainingString }}</li>
-						<li>Num purchased: {{ currDeal.getNumPurchased }}</li>
-						<li><a href="{{ currDeal.get_buy_url }}">Buy the deal!</a></li>
+						<li>Time remaining: {{ deal.getTimeRemainingString }}</li>
+						<li>Num purchased: {{ deal.getNumPurchased }}</li>
+						<li><a href="{{ deal.get_buy_url }}">Buy the deal!</a></li>
 					</ul>
 				</div>
 				<!-- Picture -->

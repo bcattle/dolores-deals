@@ -14,7 +14,8 @@
 				<p class="error>Sorry, that username or password is invalid</p>
 			{% endif %}
 			
-			<form action="" method="post">
+			<form method="post" action="{% url django.contrib.auth.views.login %}">
+				{% csrf_token %}
 				<label for="username">User name:</label>
 				<input type="text" name="username" value="" id="username" />
 				<label for="password">Password:</label>

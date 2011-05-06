@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 #from deal.models import DealChoice
 
-class Purchase(models.Model):
+class Order(models.Model):
 	user = models.ForeignKey(User)
 	dealChoice = models.ForeignKey('deal.DealChoice')
 	qty = models.PositiveSmallIntegerField()
@@ -22,7 +22,7 @@ PAYMENT_STATUS_CHOICES = (
 )	
 
 class PaymentToNonprofit(models.Model):
-	purchase = models.ForeignKey(Purchase)					# The associated purchase transaction
+	order = models.ForeignKey(Order)					# The associated purchase transaction
 	beneficiary = models.ForeignKey('deal.Beneficiary')
 	nonprofit = models.ForeignKey('nonprofit.Nonprofit', blank=True, null=True)		# Holds nonprofit if beneficiary is a cause
 	nonprofitAssigned = models.BooleanField(default=False)				# Did the user select a nonprofit, or do we need to
@@ -42,7 +42,7 @@ class PaymentToNonprofit(models.Model):
 		verbose_name_plural = 'Payments to Nonprofits'
 	
 class PaymentToUs(models.Model):
-	purchase = models.ForeignKey(Purchase)					# The associated purchase transaction
+	order = models.ForeignKey(Order)					# The associated purchase transaction
 	amount = models.DecimalField(max_digits=9, decimal_places=2)
 	status = models.CharField(max_length=12, choices=PAYMENT_STATUS_CHOICES, default='PENDING')
 	lastStatusUpdated = models.DateTimeField()
@@ -59,7 +59,7 @@ class PaymentToUs(models.Model):
 		verbose_name_plural = 'Payments to Us'
 
 class PaymentToVendor(models.Model):
-	purchase = models.ForeignKey(Purchase)					# The associated purchase transaction
+	order = models.ForeignKey(Order)					# The associated purchase transaction
 	vendor = models.ForeignKey('deal.Vendor', blank=True, null=True)		# Holds nonprofit if beneficiary is a cause
 	amount = models.DecimalField(max_digits=9, decimal_places=2)
 	status = models.CharField(max_length=12, choices=PAYMENT_STATUS_CHOICES, default='PENDING')

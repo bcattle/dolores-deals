@@ -6,5 +6,7 @@ urlpatterns = patterns('django.contrib.auth.views',
 )
 
 urlpatterns += patterns('base_accounts.views',
+	(r'^register/$', 'register'),
 	(r'^verify/$', 'verify'),
+	(r'^profile/$', 'profile'),
 )

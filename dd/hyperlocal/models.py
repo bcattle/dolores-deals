@@ -1,9 +1,11 @@
 from django.db import models
+from django.contrib.localflavor.us.models import USStateField
 
 class City(models.Model):
 	name = models.CharField(max_length=50, unique=True)
 	slug = models.SlugField(max_length=50, unique=True)
 	abbreviation = models.CharField(max_length=10, blank=True, unique=True)
+	state = USStateField()		# Used to autopopulate form fields
 	#urlString = models.ForeignKey('dynamicurls.UrlString', blank=True, null=True, on_delete=models.SET_NULL)
 	enabled  = models.BooleanField(default=False)
 	meta_keywords = models.CharField('Meta Keywords', max_length=255, blank=True)

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from base_util.models import Picture
 from nonprofit.models import Cause, Nonprofit
 from hyperlocal.models import Neighborhood
-from deal_processing.models import Purchase
+from deal_processing.models import Order
 
 from datetime import datetime
 	
@@ -99,7 +99,7 @@ class Deal(models.Model):
 	def getTimeRemainingString(self):
 		return str(datetime.now() - self.endDate)
 	def getNumPurchased(self):
-		return Purchase.objects.filter(dealChoice__deal=self).count()
+		return Order.objects.filter(dealChoice__deal=self).count()
 	class Meta:
 		ordering = ['startDate', 'vendor']
 		order_with_respect_to = 'neighborhood'
@@ -137,6 +137,7 @@ class DealChoice(models.Model):
 	dollarsToCharity = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True)
 	percentToCharity = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 	
+	enabled = models.BooleanField(default=True)
 	minQty = models.PositiveIntegerField(blank=True, null=True)			# Or the deal won't happen (TODO)
 	maxQty = models.PositiveIntegerField(blank=True, null=True)
 	
