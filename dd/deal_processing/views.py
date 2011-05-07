@@ -2,7 +2,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import user_passes_test
 
-from base_accounts.util import user_enabled
+from base_accounts.util import user_enabled, createUser
 from base_accounts.forms import NewUserForm
 from hyperlocal.models import City, Neighborhood
 from hyperlocal.shortcuts import get_city_or_404, get_neighborhood_or_404
@@ -21,21 +21,15 @@ def buy_deal(request, city_slug, neighborhood_slug, deal_slug, template_name='de
 		# Create both forms, if the newuser form doesn't validate - doesn't matter
 		newUserForm = NewUserForm(request.POST)
 		buyForm = BuyDealForm(request.POST)
-		#import pdb; pdb.set_trace()
-		#assert False
-		
-		# We're good if buyform is good and either they're logged in 
-		# or they just made a new account
+		# We're good if buyform is good and 
+		# either (1) they're logged in or (2) they just made a new account
 		if buyForm.is_valid() and (request.user.is_authenticated() or newUserForm.is_valid()):
 			# fields are in form.cleaned_data
+			#import pdb; pdb.set_trace()
 			if not request.user.is_authenticated():
-				# Create User object
-				pass
-			# Create Purchase object
-			pass
-			# Store Purchase in session and send to confirm page
-			pass
-			assert False			
+				createUser(newUserForm)
+			# Store form data in session and send to confirm page
+			request.session['buyForm'] = buyForm
 			return HttpResponseRedirect(deal.get_confirm_url())
 		# We failed to validate, fall through to render form with errors
 	else:
@@ -75,6 +69,8 @@ def confirm_deal(request, city_slug, neighborhood_slug, deal_slug, template_name
 	neighborhood = get_neighborhood_or_404(city, neighborhood_slug)
 	deal = get_deal_or_404(neighborhood, deal_slug)
 	# Is there a purchase queued in session?
+	# Create Purchase object
+	# Save this order info if not already in the database
 	pass
 	
 def thanks_deal(request, city_slug, neighborhood_slug, deal_slug, template_name='deal_thanks.html'):

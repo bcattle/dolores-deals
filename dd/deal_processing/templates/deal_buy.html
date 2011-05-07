@@ -22,7 +22,7 @@
 						{% else %}
 							<div class="dealChoiceDisabled">
 						{% endif %}
-						<input type="radio" name="dealChoice" value="dealChoice_{{ forloop.counter0 }}" />{{ choice.descriptionHtml|safe }} - <input type="text" name="dealChoice_{{ forloop.counter0 }}" value="1" class="dealChoiceQty" /> x {{ choice.price }} = {{ choice.price }}
+						<input type="radio" name="dealChoice" value="dealChoice_{{ forloop.counter0 }}" {% if forloop.first %}checked="checked"{% endif %} />{{ choice.descriptionHtml|safe }} - <input type="text" name="dealChoice_{{ forloop.counter0 }}" value="1" class="dealChoiceQty" /> x ${{ choice.price }} = ${{ choice.price }}
 					</div></li>
 					{% endfor %}
 					<li><h5>Total: $15</h5></li>
@@ -60,8 +60,7 @@
 				<div class="form">
 					{% for f in buyForm %}
 						<div class="field">
-							{{ f.errors }}
-							{{ f.label_tag }}: {{ f }}
+							{{ f.label_tag }}: {{ f }} {{ f.errors }}
 						</div>
 					{% endfor %}
 				</div>

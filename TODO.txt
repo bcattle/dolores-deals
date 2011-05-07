@@ -2,22 +2,10 @@ Log exceptions into database
 
 Tests
 
-
-Separate apps for "checkout"? "Redemption"? "Coupon"?
-
-Branching on POST vs. GET - Difinitive Guide p159
-
-Helper methods embedded into models? E.g. get_sale_price()
-
-http://www.doloresdeals.org/sf/the-mission
-
-regex, view, args, label-for-get-absolute-url
-
 Use open graph protocol - http://ogp.me/ - title, url, description, and image
 see scoutmob
 
 Add <link rel="shortcut icon" href="/images/favicon.ico?1304380848"/>
-
 
 
 Dolores Deals content:
@@ -25,8 +13,6 @@ Dolores Deals content:
  - Page titles
  - Default meta description and keywords in settings.py
  - 
-
-{% block title %}DoloresDeals.org | A better deal for your neighborhood{% endblock %}
 
 
 UrlNodes or something

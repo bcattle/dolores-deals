@@ -1,8 +1,7 @@
 from django.db import models
-
-# Create your models here.
 from django.contrib.auth.models import User
 from hyperlocal.models import Neighborhood, City
+from deal_processing.models import BillingDetailBase
 
 # auth.models.User contains
 # username, first_name, last_name, email, is_active, last_login, date_joined
@@ -24,8 +23,12 @@ class UserProfile(models.Model):
 	
 	defaultNeighborhood = models.ForeignKey(Neighborhood, blank=True, null=True, on_delete=models.SET_NULL)
 	defaultCity = models.ForeignKey(City, blank=True, null=True, on_delete=models.SET_NULL)
+	zipCode = models.CharField(max_length=11, blank=True)
 	
 	def __unicode__(self):
 		return self.user.first_name + ' ' + self.user.last_name
 	class Meta:
 		ordering = ['user']
+
+class UserBillingDetail(BillingDetailBase):
+	user =  models.ForeignKey(User)
