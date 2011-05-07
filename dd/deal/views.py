@@ -1,5 +1,5 @@
 from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 
 from hyperlocal.models import City, Neighborhood
 from hyperlocal.shortcuts import get_city_or_404, get_neighborhood_or_404
@@ -14,7 +14,7 @@ def show_deal(request, city_slug, neighborhood_slug, deal_slug, template_name='d
 	c = {
 		'city': city,
 		'neighborhood': neighborhood,
-		'currDeal': deal,
+		'deal': deal,
 		'defaultDealChoice': defaultDealChoice,
 		'nonprofit': deal.getDefaultNonprofit(),
 		'current_menu_choice': 'deal',
@@ -26,3 +26,5 @@ def show_deal(request, city_slug, neighborhood_slug, deal_slug, template_name='d
 		c['meta_description'] = deal.meta_description
 	return render_to_response(template_name, c, context_instance=RequestContext(request))
 	
+def default_deal(request):
+	return redirect('http://127.0.0.1:8000/san-francisco/mission/shelley-mitchells-talking-with-angels/')

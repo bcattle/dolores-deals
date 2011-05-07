@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
-{# 		deal_buy.html												#}
+{# 		deal_confirm.html											#}
 {# 		Bryan Cattle - 5/6/2011										#}
-{# 		Page for collecting user info for purchase					#}
+{# 		Confirmation page before user buys a deal					#}
 
 {% block content %}
 <!-- Start Content Wrapper -->
@@ -47,24 +47,14 @@
 					<!-- New user form -->
 					<h3>Personal information</h3>
 					<ul>
-						{% for f in newUserForm %}
-						<li class="field">
-							{{ f.errors }}
-							{{ f.label_tag }}: {{ f }}
-						</li>
-					{% endfor %}
+						{{ newUserForm.as_ul }}
 					</ul>
 				{% endif %}
 				<!-- Buy form -->
 				<h3>Billing information</h3>
-				<div class="form">
-					{% for f in buyForm %}
-						<div class="field">
-							{{ f.errors }}
-							{{ f.label_tag }}: {{ f }}
-						</div>
-					{% endfor %}
-				</div>
+				<ul>
+					{{ buyForm.as_ul }}
+				</ul>
 				<input type="submit" value="Place order" />
 			</form>
 		</div>

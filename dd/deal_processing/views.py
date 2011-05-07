@@ -1,24 +1,57 @@
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.localflavor.us.us_states import US_STATES		# ('AL', 'Alabama')
 
 from base_accounts.util import user_enabled
+from base_accounts.forms import NewUserForm
 from hyperlocal.models import City, Neighborhood
 from hyperlocal.shortcuts import get_city_or_404, get_neighborhood_or_404
 from deal.models import Deal, DealChoice
 from deal.shortcuts import get_deal_or_404
 from deal_processing.models import Order
-from deal_processing.forms import NewUserForm, BuyDealForm
+from deal_processing.forms import BuyDealForm, getStateIndex
 
 def buy_deal(request, city_slug, neighborhood_slug, deal_slug, template_name='deal_buy.html'):
 	# Is it a valid deal url?
 	city = get_city_or_404(city_slug)
 	neighborhood = get_neighborhood_or_404(city, neighborhood_slug)
 	deal = get_deal_or_404(neighborhood, deal_slug)
+	# Is it a POST request?
+	if request.method == 'POST':
+		# Create both forms, if the newuser form doesn't validate - doesn't matter
+		newUserForm = NewUserForm(request.POST)
+		buyForm = BuyDealForm(request.POST)
+		#import pdb; pdb.set_trace()
+		#assert False
+		
+		# We're good if buyform is good and either they're logged in 
+		# or they just made a new account
+		if buyForm.is_valid() and (request.user.is_authenticated() or newUserForm.is_valid()):
+			# fields are in form.cleaned_data
+			if not request.user.is_authenticated():
+				# Create User object
+				pass
+			# Create Purchase object
+			pass
+			# Store Purchase in session and send to confirm page
+			pass
+			assert False			
+			return HttpResponseRedirect(deal.get_confirm_url())
+		# We failed to validate, fall through to render form with errors
+	else:
+		newUserForm = NewUserForm()
+		if request.user.is_authenticated():
+			defaultName = request.user.first_name + ' ' + request.user.last_name
+		else:
+			defaultName = ''
+		initialBuyData = {
+			'cardholderName': defaultName,
+			'billingCity': city.name,
+		}
+		buyForm = BuyDealForm(initial=initialBuyData, defaultState='CA')
+		#buyForm = BuyDealForm(initial=initialBuyData)
+	# New forms or if we fell through validation
 	dealChoices = DealChoice.objects.filter(deal=deal).order_by('index')
-	newUserForm = NewUserForm()
-	buyForm = BuyDealForm(defaultState=city.state, defaultCity=city.name)
 	c = {
 		'city': city,
 		'neighborhood': neighborhood,
@@ -36,6 +69,22 @@ def buy_deal(request, city_slug, neighborhood_slug, deal_slug, template_name='de
 		c['meta_description'] = deal.meta_description
 	return render_to_response(template_name, c, context_instance=RequestContext(request))
 
+def confirm_deal(request, city_slug, neighborhood_slug, deal_slug, template_name='deal_confirm.html'):
+	# Is it a valid deal url?
+	city = get_city_or_404(city_slug)
+	neighborhood = get_neighborhood_or_404(city, neighborhood_slug)
+	deal = get_deal_or_404(neighborhood, deal_slug)
+	# Is there a purchase queued in session?
+	pass
+	
+def thanks_deal(request, city_slug, neighborhood_slug, deal_slug, template_name='deal_thanks.html'):
+	# Is it a valid deal url?
+	city = get_city_or_404(city_slug)
+	neighborhood = get_neighborhood_or_404(city, neighborhood_slug)
+	deal = get_deal_or_404(neighborhood, deal_slug)
+	# Did the user actually purchase?
+	pass
+	
 @user_passes_test(user_enabled, login_url='/login/')
 def order_info(request, order_id, template_name='order_info.html'):
 	# Test that order_id exists and belongs to logged-in user

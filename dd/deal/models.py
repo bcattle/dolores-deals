@@ -122,6 +122,22 @@ class Deal(models.Model):
 			'neighborhood_slug': self.neighborhood.slug,
 			'city_slug': self.neighborhood.city.slug
 		})
+	@models.permalink
+	def get_confirm_url(self):
+		# view, positional_args, named_args
+		return('confirm_deal_page', (), {
+			'deal_slug': self.slug, 
+			'neighborhood_slug': self.neighborhood.slug,
+			'city_slug': self.neighborhood.city.slug
+		})
+	@models.permalink
+	def get_thanks_url(self):
+		# view, positional_args, named_args
+		return('thanks_deal_page', (), {
+			'deal_slug': self.slug, 
+			'neighborhood_slug': self.neighborhood.slug,
+			'city_slug': self.neighborhood.city.slug
+		})
 	
 class DealChoice(models.Model):
 	deal = models.ForeignKey(Deal)

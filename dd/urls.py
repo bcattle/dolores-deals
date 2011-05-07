@@ -19,5 +19,4 @@ urlpatterns = patterns('',
 	(r'^', include('dd.hyperlocal.urls')),
 	(r'^', include('dd.nonprofit.urls')),
 	
-	#(r'^$', 'dd.deal.deal'),
 )
