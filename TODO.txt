@@ -15,6 +15,26 @@ Dolores Deals content:
  - 
 
 
-UrlNodes or something
-Catch san-francisco and send to sf
 
+http://code.djangoproject.com/wiki/DjangoResources#Djangoapplicationcomponents
+http://www.djangopackages.com/grids/
+
+
+django-mailer
+django-cron
+http://pydanny.github.com/django-uni-form/ 	(div-based form rendering)
+
+
+Credit card number validation
+Password reset
+Google analytics - django-analytical
+Email verification - https://bitbucket.org/ubernostrum/django-registration/wiki/Home
+Social login / fb connect - Django-Socialauth, Django-Facebook, Django-Twitter-Users
+Photo resizing - https://github.com/sorl/sorl-thumbnail#readme, django-photologue, django-imagekit
+Ajax form validation - django-ajax-validation
+Neighborhood adjacency - Django MPTT, django-treebeard - http://blogs.sitepoint.com/hierarchical-data-database/
+Tests - unit tests, http://seleniumhq.org/
+Logging
+Rich text editing
+Short urls
+Catch san-francisco and send to sf

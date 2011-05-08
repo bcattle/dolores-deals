@@ -1,5 +1,7 @@
 import os
+#import sys
 ROOT_PATH = os.path.dirname(__file__)
+#sys.path.insert(0, os.path.join(ROOT_PATH, "django-paypal"))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -21,6 +23,14 @@ DATABASES = {
     }
 }
 
+ENABLE_SSL = False
+
+PAYPAL_TEST = True
+PAYPAL_WPP_USER = '???'
+PAYPAL_WPP_PASSWORD = '???'
+PAYPAL_WPP_SIGNATURE = '???'
+PAYPAL_RECEIVER_EMAIL = ''
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -38,7 +48,7 @@ SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
-USE_I18N = False
+USE_I18N = True
 
 # If you set this to False, Django will not format dates, numbers and
 # calendars according to the current locale
@@ -122,6 +132,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+	'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+	'dd.middleware.SSLRedirect',
 )
 
 ROOT_URLCONF = 'dd.urls'
@@ -140,6 +152,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
+	'django.contrib.flatpages',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
@@ -149,13 +162,14 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     #'django.contrib.admindocs',
 	'base_accounts',
-	#'base_dynamicurls',
 	'base_util',
 	'deal',
 	'deal_processing',
 	'deal_affiliates',
 	'hyperlocal',
 	'nonprofit',
+	'paypal.standard',
+	'paypal.pro',
 )
 
 # A sample logging configuration. The only tangible logging

@@ -6,7 +6,8 @@ urlpatterns = patterns('django.contrib.auth.views',
 )
 
 urlpatterns += patterns('base_accounts.views',
-	(r'^register/$', 'register'),
+	(r'^register/$', 'register', {'SSL': True }),
 	(r'^verify/$', 'verify'),
-	(r'^profile/$', 'profile'),
+	(r'^profile/$', 'profile', {'SSL': True }),
+	(r'order_info/(?P<order_id>[-\w]+)/$', 'order_info', { 'template_name': 'order_info.html' }, 'order_info_page'),
 )

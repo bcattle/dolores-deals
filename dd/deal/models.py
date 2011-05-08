@@ -105,7 +105,8 @@ class Deal(models.Model):
 		order_with_respect_to = 'neighborhood'
 		unique_together = ('neighborhood', 'slug')
 	def __unicode__(self):
-		return self.vendor.name + ' : ' + self.headline
+		str = self.vendor.name + ' : ' + self.headline
+		return (str[:60] + '...') if len(str) > 60 else str
 	@models.permalink
 	def get_absolute_url(self):
 		# view, positional_args, named_args
@@ -130,7 +131,6 @@ class Deal(models.Model):
 			'neighborhood_slug': self.neighborhood.slug,
 			'city_slug': self.neighborhood.city.slug
 		})
-	@models.permalink
 	def get_thanks_url(self):
 		# view, positional_args, named_args
 		return('thanks_deal_page', (), {
@@ -156,18 +156,19 @@ class DealChoice(models.Model):
 	enabled = models.BooleanField(default=True)
 	minQty = models.PositiveIntegerField(blank=True, null=True)			# Or the deal won't happen (TODO)
 	maxQty = models.PositiveIntegerField(blank=True, null=True)
+	maxPerPerson = models.PositiveIntegerField(blank=True, null=True)
 	
 	def getDonationString(self):
 		if self.dollarsToCharity:
-			return '$' + str(self.dollarsToCharity) + '</span> from'
+			return str(self.dollarsToCharity) + '</span> from'
 		else:
 			return str(self.percentToCharity) + '%</span> of'
 	def discountDollars(self):
-		return '$%.2f' % (self.regPrice - self.price)
+		return '%.2f' % (self.regPrice - self.price)
 	def discountPercent(self):
 		return '%d%%' % ((self.price / self.regPrice) * 100)
 	def __unicode__(self):
-		return str(self.deal.vendor) + ': (opt ' + str(self.index) + ') - ' + self.title
+		return str(self.deal.vendor) + ': (opt ' + str(self.index) + ') - ' + self.descriptionHtml
 	class Meta:
 		unique_together = ('deal', 'index')
 		ordering = ['deal', 'index']

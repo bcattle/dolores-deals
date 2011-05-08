@@ -1,3 +1,5 @@
+{% load util_tags %}
+
 {# 		footer.html											#}
 {# 		Bryan Cattle - 2/27/2011							#}
 {# 		Page footer with links and feedback form			#}
@@ -11,11 +13,13 @@
 			<p>DoloresDeals.org is a new kind of daily deals site. We donate a percentage of every deal to local charities that you choose.</p>
 			<p>We focus on your neighborhood. You buy a deal from a local merchant, and you support local business and nonprofits making a difference in the community.</p>
 			<ul>
-				<li><h4><a href="/partners/vendors/" title="For Vendors">For Vendors</a></h4></li>
+				{% footer_links %}
+			
+				<!-- <li><h4><a href="/partners/vendors/" title="For Vendors">For Vendors</a></h4></li>
 				<li><h4><a href="/partners/nonprofits/" title="For Nonprofits">For Nonprofits</a></h4></li>
 				<li><h4><a href="/press/" title="Press">Press</a></h4></li>
 				<li><h4><a href="/legal/" title="Legal">Legal</a></h4></li>
-				<li><h4><a href="/jobs/" title="Jobs">Jobs</a></h4></li>
+				<li><h4><a href="/jobs/" title="Jobs">Jobs</a></h4></li> -->
 			</p>
 		</div>
 		<!-- Start Third Collumn -->

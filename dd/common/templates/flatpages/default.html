@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{# 		default.html												#}
+{# 		Bryan Cattle - 5/7/2011										#}
+{# 		Default template for flat pages								#}
+
+{% block title %}
+	{{ flatpage.title }} - {{ site_name }}
+{% endblock %}
+
+{% block content %}
+<!-- Start Content Wrapper -->
+<div id="content_wrapper">
+	<!-- Content Area -->
+	<div id="content">
+		<div class="box" style="padding:30px;">
+			<h1>{{ flatpage.title }}</h1>
+			{{ flatpage.content }}
+		</div>
+	</div>
+</div>
+{% endblock %}

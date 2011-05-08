@@ -9,6 +9,10 @@ class DealAdmin(admin.ModelAdmin):
 	list_filter = ('status','neighborhood')
 	prepopulated_fields = {'slug': ('headline',)}
 
+class DealChoiceAdmin(admin.ModelAdmin):
+	list_display = ('deal', 'index', 'descriptionHtml', 'price', 'enabled', 'minQty', 'maxQty', 'maxPerPerson')
+	list_filter = ('deal',)
+	
 class BeneficiaryAdmin(admin.ModelAdmin):
 	#form = BeneficiaryAdminForm
 	pass
@@ -16,5 +20,5 @@ class BeneficiaryAdmin(admin.ModelAdmin):
 admin.site.register(Beneficiary, BeneficiaryAdmin)
 admin.site.register(Vendor)
 admin.site.register(Deal, DealAdmin)
-admin.site.register(DealChoice)
+admin.site.register(DealChoice, DealChoiceAdmin)
 admin.site.register(DealRun)

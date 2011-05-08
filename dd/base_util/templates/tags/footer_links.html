@@ -1,0 +1,5 @@
+{% with flatpage_list as page_list %}
+	{% for page in flatpage_list %}
+		<li><h4><a href="{{ page.url }}" title="{{ page.title }}">{{ page.title }}</a></h4></li>
+	{% endfor %}
+{% endwith %}

@@ -12,7 +12,6 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
 
 	(r'^', include('dd.base_accounts.urls')),
-	(r'^', include('dd.base_flatpages.urls')),
 	(r'^', include('dd.deal.urls')),
 	(r'^', include('dd.deal_processing.urls')),	
 	(r'^', include('dd.deal_coupon.urls')),

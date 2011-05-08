@@ -6,16 +6,19 @@ from deal_processing.widgets import MonthYearWidget
 
 # PROBLEM: If using a single select, how do we deal with different available quantities per choice?
 
-# class DealChoiceForm(forms.Form):
-	# def __init__(self, *args, **kwargs):
-		# defaultState = kwargs.pop('defaultState','')
-		# super(BuyDealForm, self).__init__(*args, **kwargs)
-		
-	# dealChoice = forms.ModelChoiceField(queryset= , empty_label=None)
-	# qty = forms.IntegerField(max_value=99, label='', 
-							# error_messages={'required': 'Please enter a quantity to buy',
-											# 'invalid': 'Please enter a valid quantity',
-											# 'max_value': 'Sorry, you can only purchase up to xx per person'})
+# This is a dummy form used to validate the user input
+class DealChoiceForm(forms.Form):
+	#dealChoice = forms.ModelChoiceField(queryset= , empty_label=None)
+	def __init__(self, *args, **kwargs):
+		maxPerPerson = kwargs.pop('maxPerPerson','')
+		super(DealChoiceForm, self).__init__(*args, **kwargs)
+		self.fields['qty'] = forms.IntegerField(min_value=1, 
+				error_messages={'required': 'Please enter a quantity to buy',
+								'invalid': 'Please enter a valid quantity',
+								'min_value': 'Please enter a valid quantity'})
+		if maxPerPerson:
+			self.fields['qty'].max_value = maxPerPerson
+			error_messages += {'max_value': 'Sorry, for this deal you can only purchase up to %d per person' % maxPerPerson}
 
 # TODO: Verify actual maximum-length credit card numbers
 class BuyDealForm(forms.Form):
