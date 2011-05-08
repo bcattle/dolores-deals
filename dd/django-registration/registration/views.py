@@ -1,11 +1,8 @@
 """
 Views which allow users to create and activate accounts.
-
 """
 
-
-from django.shortcuts import redirect
-from django.shortcuts import render_to_response
+from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 
 from registration.backends import get_backend
