@@ -6,3 +6,4 @@ venv
 
 /django.contrib.auth
 /store/static
+/dd/django-registration/.hg

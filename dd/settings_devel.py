@@ -1,7 +1,8 @@
 import os
-#import sys
+import sys
 ROOT_PATH = os.path.dirname(__file__)
-#sys.path.insert(0, os.path.join(ROOT_PATH, "django-paypal"))
+#sys.path.insert(0, os.path.join(ROOT_PATH, 'django-paypal'))
+sys.path.insert(0, os.path.join(ROOT_PATH, 'django-registration'))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -170,6 +171,7 @@ INSTALLED_APPS = (
 	'nonprofit',
 	'paypal.standard',
 	'paypal.pro',
+	'registration',
 )
 
 # A sample logging configuration. The only tangible logging
